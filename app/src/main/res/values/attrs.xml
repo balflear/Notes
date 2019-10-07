@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="OnBoardingView">
+        <attr name="titleText" format="string" />
+        <attr name="descriptionText" format="string" />
+        <attr name="drawable" format="color|reference" />
+    </declare-styleable>
+</resources>

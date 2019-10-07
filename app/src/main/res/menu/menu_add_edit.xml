@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.ui.activities.HomeActivity">
+
+    <item
+        android:id="@+id/action_add"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/action_save"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_lock"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/action_lock"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_unlock"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/action_unlock"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/action_delete"
+        app:showAsAction="collapseActionView" />
+</menu>
