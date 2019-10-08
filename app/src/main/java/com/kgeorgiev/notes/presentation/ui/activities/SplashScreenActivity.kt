@@ -26,6 +26,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
         tvSplashText.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation)
 
+        val bundle = intent.extras
+
         Handler().postDelayed({
             if (lottieView.isAnimating) {
                 lottieView.cancelAnimation()
@@ -49,7 +51,11 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun goToHomeScreen() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        val homeScreenIntent = Intent(this, HomeActivity::class.java)
+        intent.extras?.let {
+            homeScreenIntent.putExtras(it)
+        }
+        startActivity(homeScreenIntent)
     }
 
     private fun goToOnboardingScreen() {

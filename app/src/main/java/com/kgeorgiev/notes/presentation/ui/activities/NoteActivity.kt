@@ -1,5 +1,11 @@
 package com.kgeorgiev.notes.presentation.ui.activities
 
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.app.TimePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +17,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
+import com.kgeorgiev.notes.domain.DateFormatter
+import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
@@ -30,6 +38,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
     private lateinit var notesViewModel: NotesViewModel
     private var selectedNote: Note? = null
     private lateinit var mediaPlayer: MediaPlayer
+    private val myCalendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +70,13 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         val itemDelete = menu.findItem(R.id.action_delete)
         val itemLock = menu.findItem(R.id.action_lock)
         val itemUnlock = menu.findItem(R.id.action_unlock)
+        val itemReminder = menu.findItem(R.id.action_schedule)
 
         if (selectedNote == null) {// Means it's a new note case
             itemDelete.isVisible = false
             itemLock.isVisible = false
             itemUnlock.isVisible = false
+            itemReminder.isVisible = false
         }
 
         // Handle lock/unlock button state if device has hardware-fingerprint
@@ -94,10 +105,12 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 }
                 true
             }
+
             R.id.action_delete -> {
                 showDeleteNoteDialog()
                 true
             }
+
             R.id.action_lock -> {
                 selectedNote?.let {
                     it.isLocked = true
@@ -105,11 +118,16 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 }
                 true
             }
+
             R.id.action_unlock -> {
                 selectedNote?.let {
                     it.isLocked = false
                     updateNote(selectedNote)
                 }
+                true
+            }
+            R.id.action_schedule -> {
+                showDatePickerDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -181,6 +199,43 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         finish()
     }
 
+    private var date: DatePickerDialog.OnDateSetListener =
+        DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, monthOfYear)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            showTimePickerDialog()
+        }
+
+    private var timePickerListener: TimePickerDialog.OnTimeSetListener =
+        TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            myCalendar.set(Calendar.HOUR_OF_DAY, hour)
+            myCalendar.set(Calendar.MINUTE, minute)
+            myCalendar.set(Calendar.SECOND, 0)
+
+            scheduleNotification(myCalendar.timeInMillis)
+            showToastMsg("Reminder set for ${DateFormatter.formatDate(myCalendar.time)}")
+        }
+
+    private fun showDatePickerDialog() {
+        DatePickerDialog(
+            this, date,
+            myCalendar.get(Calendar.YEAR),
+            myCalendar.get(Calendar.MONTH),
+            myCalendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun showTimePickerDialog() {
+        TimePickerDialog(
+            this, timePickerListener,
+            myCalendar.get(Calendar.HOUR_OF_DAY),
+            myCalendar.get(Calendar.MINUTE),
+            true
+        ).show()
+    }
+
     private fun startAnimations() {
         etTitle.startAnimation(
             AnimationUtils.loadAnimation(
@@ -194,6 +249,27 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 this,
                 R.anim.fade_left_to_right_animation
             )
+        )
+    }
+
+
+    private fun scheduleNotification(alarmTime: Long) {
+        val notificationIntent = Intent(this, NotificationsReceiver::class.java)
+        val bundle = Bundle()
+        bundle.putString(NotificationsReceiver.NOTIFICATION_TITLE_PARAM, selectedNote?.title)
+        bundle.putString(NotificationsReceiver.NOTIFICATION_TEXT_PARAM, selectedNote?.description)
+        bundle.putInt(NotificationsReceiver.NOTE_ID_PARAM, selectedNote!!.id)
+        notificationIntent.putExtras(bundle)
+        notificationIntent.action = "android.intent.action.NOTIFY"
+
+        val pendingIntent =
+            PendingIntent.getBroadcast(applicationContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            alarmTime,
+            pendingIntent
         )
     }
 

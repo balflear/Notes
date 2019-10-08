@@ -7,6 +7,7 @@
     <string name="action_lock">Заключване</string>
     <string name="action_unlock">Отключване</string>
     <string name="action_settings">Настройки</string>
+    <string name="action_schedule">Напомняне</string>
     <string name="title">Заглавие</string>
     <string name="description">Описание</string>
 

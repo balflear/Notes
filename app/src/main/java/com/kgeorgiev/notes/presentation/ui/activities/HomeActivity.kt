@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
+import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.adapters.NotesAdapter
@@ -51,19 +52,37 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     override fun onResume() {
         super.onResume()
 
-        notesViewModel.getNotes().observe(this, Observer {
-            it?.let {
-                if (it.isNotEmpty()) {
-                    stopEmptyStateAnimation()
-                } else {
-                    startEmptyStateAnimation()
+        if (intent.extras != null && intent.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM) > 0) {
+            // When open app from notification
+            val noteId = intent!!.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM)
+            notesViewModel.getNote(noteId).observe(this, Observer {
+                it?.let {
+                    notesAdapter.updateValues(it as ArrayList<Note>)
                 }
-
-                notesAdapter.updateValues(it as ArrayList<Note>)
-            }
-        })
+            })
+        } else {
+            // Normal opening of the screen
+            notesViewModel.getNotes().observe(this, Observer {
+                it?.let {
+                    if (it.isNotEmpty()) {
+                        stopEmptyStateAnimation()
+                    } else {
+                        startEmptyStateAnimation()
+                    }
+                    notesAdapter.updateValues(it as ArrayList<Note>)
+                }
+            })
+        }
 
         initViews()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // clearing intent data
+        // this is needed when app is opened from notification
+        intent.replaceExtras(null)
     }
 
     override fun onNoteClicked(note: Note) {
@@ -103,6 +122,8 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
         startActivity(intent)
     }
 
+
+    //TODO: Not needed for now
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        // Inflate the menu; this adds items to the action bar if it is present.
 //        menuInflater.inflate(R.menu.menu_main, menu)

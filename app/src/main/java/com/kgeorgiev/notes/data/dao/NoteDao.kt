@@ -20,4 +20,7 @@ interface NoteDao {
 
     @Update
     suspend fun update(note: Note)
+
+    @Query("SELECT * FROM notes_table WHERE id=:noteId")
+    fun get(noteId: Int): Note
 }

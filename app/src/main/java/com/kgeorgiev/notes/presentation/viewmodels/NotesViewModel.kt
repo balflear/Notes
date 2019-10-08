@@ -37,6 +37,17 @@ class NotesViewModel @Inject constructor(private var notesRepository: NotesRepos
         }
     }
 
+    fun getNote(noteId: Int): LiveData<List<Note>> {
+        viewModelScope.launch {
+            val note = notesRepository.getNote(noteId)
+            val list = ArrayList<Note>()
+            list.add(note)
+            notesLiveData.value = list
+        }
+
+        return notesLiveData
+    }
+
     @Suppress("UNCHECKED_CAST")
     fun getNotes(): LiveData<List<Note>> {
         viewModelScope.launch {
