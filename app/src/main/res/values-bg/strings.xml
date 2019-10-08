@@ -7,7 +7,7 @@
     <string name="action_lock">Заключване</string>
     <string name="action_unlock">Отключване</string>
     <string name="action_settings">Настройки</string>
-    <string name="action_schedule">Напомняне</string>
+    <string name="action_reminder">Напомняне</string>
     <string name="title">Заглавие</string>
     <string name="description">Описание</string>
 
@@ -43,6 +43,8 @@
     <string name="onboarding_hello_description">Запазете вашите мисли лесно и бързо</string>
 
     <string name="onboarding_security_title">Защита</string>
-    <string name="onboarding_security_description">Защитете вашата бележка, така че само вие да можете да я отворите като използвате отпечатък
-    или дръг метод на отключване.</string>
+    <string name="onboarding_security_description">Защитете вашата бележка, така че само вие да можете да я отворите като използвате отпечатък</string>
+    <string name="onboarding_reminder_title">Напомняне</string>
+    <string name="onboarding_reminder_description">Вие можете лесно да сложите дата и час в който искате телефона да ви изпрати Нотификация за конкретна бележка</string>
+    или дръг метод на отключване.
 </resources>

@@ -22,7 +22,7 @@ class OnBoardingActivity : AppCompatActivity() {
     }
 
     private fun initViewPager() {
-        val onBoardingItems = OnBoardingItem.values().toMutableList()
+        val onBoardingItems = OnBoardingItemEnum.values().toMutableList()
 
         val onBoardingAdapter = OnBoardingAdapter(onBoardingItems, this)
         vpOnboarding.adapter = onBoardingAdapter

@@ -2,4 +2,13 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <integer name="splash_anim_duration">2500</integer>
+
+    <dimen name="onboarding_imageview_width">120dp</dimen>
+    <dimen name="onboarding_imageview_height">120dp</dimen>
+    <dimen name="onboarding_title_text_size">20sp</dimen>
+    <dimen name="onboarding_description_text_size">15sp</dimen>
+
+    <dimen name="margin_top_20">20dp</dimen>
+    <dimen name="margin_start_10">10dp</dimen>
+    <dimen name="margin_end_10">10dp</dimen>
 </resources>

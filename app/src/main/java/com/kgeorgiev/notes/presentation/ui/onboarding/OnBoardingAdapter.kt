@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.onboarding_pager_layout.view.*
 /**
  * Created by kostadin.georgiev on 10/3/2019.
  */
-class OnBoardingAdapter(private val list: List<OnBoardingItem>, val context: Context) :
+class OnBoardingAdapter(private val list: List<OnBoardingItemEnum>, val context: Context) :
     PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {

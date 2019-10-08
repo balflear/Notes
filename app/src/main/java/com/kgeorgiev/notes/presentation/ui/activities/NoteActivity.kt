@@ -70,7 +70,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         val itemDelete = menu.findItem(R.id.action_delete)
         val itemLock = menu.findItem(R.id.action_lock)
         val itemUnlock = menu.findItem(R.id.action_unlock)
-        val itemReminder = menu.findItem(R.id.action_schedule)
+        val itemReminder = menu.findItem(R.id.action_reminder)
 
         if (selectedNote == null) {// Means it's a new note case
             itemDelete.isVisible = false
@@ -126,7 +126,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 }
                 true
             }
-            R.id.action_schedule -> {
+            R.id.action_reminder -> {
                 showDatePickerDialog()
                 true
             }

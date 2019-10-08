@@ -21,9 +21,9 @@
         android:title="@string/action_unlock"
         app:showAsAction="collapseActionView" />
     <item
-        android:id="@+id/action_schedule"
+        android:id="@+id/action_reminder"
         android:icon="@android:drawable/ic_lock_idle_alarm"
-        android:title="@string/action_schedule"
+        android:title="@string/action_reminder"
         app:showAsAction="collapseActionView" />
 
     <item

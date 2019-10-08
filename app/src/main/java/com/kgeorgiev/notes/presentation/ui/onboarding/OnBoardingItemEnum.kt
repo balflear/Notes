@@ -5,7 +5,7 @@ import com.kgeorgiev.notes.R
 /**
  * Created by kostadin.georgiev on 10/3/2019.
  */
-enum class OnBoardingItem constructor(
+enum class OnBoardingItemEnum constructor(
     private val mTitleResId: Int,
     private val mDescriptionResId: Int,
     private val mDrawableResId: Int
@@ -19,6 +19,11 @@ enum class OnBoardingItem constructor(
         R.string.onboarding_security_title,
         R.string.onboarding_security_description,
         R.drawable.onboarding_lock
+    ),
+    ONBOARDING_REMINDER(
+        R.string.onboarding_reminder_title,
+        R.string.onboarding_reminder_description,
+        R.drawable.onboarding_reminder
     );
 
     fun getDescriptionResId() = mDescriptionResId

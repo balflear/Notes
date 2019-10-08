@@ -7,8 +7,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivOnBoarding"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="@dimen/onboarding_imageview_width"
+        android:layout_height="@dimen/onboarding_imageview_height"
         android:layout_gravity="center"
         app:srcCompat="@drawable/ic_splash" />
 
@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
+        android:layout_marginTop="@dimen/margin_top_20"
+        android:textSize="@dimen/onboarding_title_text_size"
         tools:text="Title text" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -28,8 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textSize="15sp"
-        tools:text="Description text" />
+        android:layout_marginTop="@dimen/margin_top_20"
+        android:layout_marginStart="@dimen/margin_start_10"
+        android:layout_marginEnd="@dimen/margin_end_10"
+        android:textSize="@dimen/onboarding_description_text_size"
+        tools:text="Description text, Description text, Description text, Description text" />
 
 </LinearLayout>
