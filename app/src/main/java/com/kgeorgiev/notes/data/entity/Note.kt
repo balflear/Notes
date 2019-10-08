@@ -25,6 +25,9 @@ data class Note(//This warning is known issue bug for the IDE https://stackoverf
     @ColumnInfo(name = "creation_date")
     var dateOfCreation: Date,
 
+    @ColumnInfo(name = "reminder_date")
+    var dateOfReminder: Long, // In ms
+
     @ColumnInfo(name = "is_locked")
     var isLocked: Boolean
 
@@ -33,6 +36,7 @@ data class Note(//This warning is known issue bug for the IDE https://stackoverf
         title: String = "",
         description: String = "",
         dateOfCreation: Date,
+        dateOfReminder: Long = 0,
         isLocked: Boolean = false
-    ) : this(0, title, description, dateOfCreation, isLocked)
+    ) : this(0, title, description, dateOfCreation, dateOfReminder, isLocked)
 }

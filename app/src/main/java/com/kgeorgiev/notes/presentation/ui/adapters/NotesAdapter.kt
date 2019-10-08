@@ -30,6 +30,7 @@ class NotesAdapter(
             AnimationUtils.loadAnimation(context, R.anim.fade_left_to_right_animation)
 
         holder.ivLockNote.visibility = if (currentNote.isLocked) View.VISIBLE else View.GONE
+        holder.ivReminderNote.visibility = if (currentNote.dateOfReminder > 0) View.VISIBLE else View.GONE
         holder.tvTitle.text = currentNote.title
         holder.tvDescription.text =
             if (currentNote.isLocked) context.getString(R.string.msg_note_is_locked) else currentNote.description
@@ -64,7 +65,7 @@ class NotesAdapter(
         val tvDescription: TextView = view.tvItemDescription
         val tvDate: TextView = view.tvItemDate
         val ivLockNote: ImageView = view.ivLockNote
-
+        val ivReminderNote: ImageView = view.ivReminderNote
     }
 
     interface OnClickListener {

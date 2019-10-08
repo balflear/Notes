@@ -9,7 +9,7 @@ import com.kgeorgiev.notes.data.entity.Note
 /**
  * Created by kostadin.georgiev on 9/17/2019.
  */
-@Database(entities = [Note::class], version = 3, exportSchema = true)
+@Database(entities = [Note::class], version = 4, exportSchema = true)
 @TypeConverters(com.kgeorgiev.notes.data.converters.DateConverter::class)
 abstract class NotesDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao

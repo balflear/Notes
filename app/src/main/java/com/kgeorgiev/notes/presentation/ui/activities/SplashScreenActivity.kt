@@ -26,7 +26,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         tvSplashText.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation)
 
-        val bundle = intent.extras
 
         Handler().postDelayed({
             if (lottieView.isAnimating) {

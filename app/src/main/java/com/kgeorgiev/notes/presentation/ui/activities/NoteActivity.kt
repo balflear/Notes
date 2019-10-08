@@ -125,6 +125,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 }
                 true
             }
+
             R.id.action_reminder -> {
                 showDatePickerDialog()
                 true
@@ -139,6 +140,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
     }
 
     override fun onPositiveButtonClicked() {
+        //TODO: Check if there is reminder for this note, and remove it too
         deleteNote(selectedNote!!)
     }
 
@@ -214,6 +216,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
             myCalendar.set(Calendar.SECOND, 0)
 
             scheduleNotification(myCalendar.timeInMillis)
+
             showToastMsg(getString(R.string.msg_reminder_set) + " ${DateFormatter.formatDate(myCalendar.time)}")
         }
 
@@ -275,6 +278,9 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
             alarmTime,
             pendingIntent
         )
+
+        selectedNote?.dateOfReminder = myCalendar.timeInMillis
+        notesViewModel.updateNote(selectedNote!!)
     }
 
     private fun initViews() {

@@ -53,25 +53,9 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
         super.onResume()
 
         if (intent.extras != null && intent.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM) > 0) {
-            // When open app from notification
-            val noteId = intent!!.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM)
-            notesViewModel.getNote(noteId).observe(this, Observer {
-                it?.let {
-                    notesAdapter.updateValues(it as ArrayList<Note>)
-                }
-            })
+            handleNoteFromNotification()
         } else {
-            // Normal opening of the screen
-            notesViewModel.getNotes().observe(this, Observer {
-                it?.let {
-                    if (it.isNotEmpty()) {
-                        stopEmptyStateAnimation()
-                    } else {
-                        startEmptyStateAnimation()
-                    }
-                    notesAdapter.updateValues(it as ArrayList<Note>)
-                }
-            })
+            handleNormalNote()
         }
 
         initViews()
@@ -139,6 +123,42 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 //            else -> super.onOptionsItemSelected(item)
 //        }
 //    }
+
+    /**
+     * Handle populations notes in normal case
+     */
+    private fun handleNormalNote() {
+        // Normal opening of the screen
+        notesViewModel.getNotes().observe(this, Observer {
+            it?.let {
+                if (it.isNotEmpty()) {
+                    stopEmptyStateAnimation()
+                } else {
+                    startEmptyStateAnimation()
+                }
+                notesAdapter.updateValues(it as ArrayList<Note>)
+            }
+        })
+    }
+
+    /**
+     * Handle populating note whenever application is started from notification
+     */
+    private fun handleNoteFromNotification() {
+        // When open app from notification
+        val noteId = intent!!.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM)
+        notesViewModel.getNote(noteId).observe(this, Observer {
+            it?.let {
+                val currentNote = it[0]
+
+                currentNote?.let {
+                    currentNote.dateOfReminder = 0 // Reset scheduled date
+                    notesViewModel.updateNote(currentNote)
+                }
+                notesAdapter.updateValues(it as ArrayList<Note>)
+            }
+        })
+    }
 
     private fun initViews() {
         toolbar.toolbar_title.text = getString(R.string.title_my_notes)
