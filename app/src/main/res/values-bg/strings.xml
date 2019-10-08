@@ -25,6 +25,7 @@
     <string name="msg_create_your_first_note">Създайте своята първа бележка</string>
     <string name="msg_delete_note">Сигурни ли сте, че изкате да изтриете бележката?</string>
     <string name="msg_note_is_locked">Вашата бележка е заключена</string>
+    <string name="msg_reminder_set">Напоняне за</string>
 
     <!-- Buttons -->
     <string name="button_ok">OK</string>

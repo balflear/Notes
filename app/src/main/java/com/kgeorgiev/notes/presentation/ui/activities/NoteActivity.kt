@@ -31,7 +31,6 @@ import javax.inject.Inject
 
 
 class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
-
     @Inject
     lateinit var viewModelFactoryProvider: ViewModelFactoryProvider
 
@@ -215,7 +214,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
             myCalendar.set(Calendar.SECOND, 0)
 
             scheduleNotification(myCalendar.timeInMillis)
-            showToastMsg("Reminder set for ${DateFormatter.formatDate(myCalendar.time)}")
+            showToastMsg(getString(R.string.msg_reminder_set) + " ${DateFormatter.formatDate(myCalendar.time)}")
         }
 
     private fun showDatePickerDialog() {
@@ -252,7 +251,6 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         )
     }
 
-
     private fun scheduleNotification(alarmTime: Long) {
         val notificationIntent = Intent(this, NotificationsReceiver::class.java)
         val bundle = Bundle()
@@ -262,8 +260,14 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         notificationIntent.putExtras(bundle)
         notificationIntent.action = "android.intent.action.NOTIFY"
 
+        val requestCode = selectedNote?.id
         val pendingIntent =
-            PendingIntent.getBroadcast(applicationContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(
+                applicationContext,
+                requestCode!!,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(

@@ -7,7 +7,6 @@
     android:background="@drawable/gradient_screen_background"
     tools:context=".presentation.ui.onboarding.OnBoardingActivity">
 
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpOnboarding"
         android:layout_width="match_parent"
