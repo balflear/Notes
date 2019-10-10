@@ -3,6 +3,7 @@ package com.kgeorgiev.notes.presentation.ui.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.fragment.app.DialogFragment
 import com.kgeorgiev.notes.R
 
@@ -16,7 +17,7 @@ class MessageDialogFragment(private val clickListener: DialogClickListener) : Di
     companion object {
         fun newInstance(
             titleResId: Int,
-            descriptionResId: Int = 0,
+            descriptionText: String = "",
             positiveButtonResId: Int = R.string.button_ok,
             negativeButtonResId: Int = R.string.button_cancel,
             dialogClickListener: DialogClickListener
@@ -25,7 +26,7 @@ class MessageDialogFragment(private val clickListener: DialogClickListener) : Di
                 MessageDialogFragment(dialogClickListener)
             val args = Bundle()
             args.putInt(PARAM_TITLE, titleResId)
-            args.putInt(PARAM_DESCRIPTION, descriptionResId)
+            args.putString(PARAM_DESCRIPTION, descriptionText)
             args.putInt(PARAM_POSITIVE_BUTTON_TEXT, positiveButtonResId)
             args.putInt(PARAM_NEGATIVE_BUTTON_TEXT, negativeButtonResId)
             messageDialogFragment.arguments = args
@@ -40,8 +41,8 @@ class MessageDialogFragment(private val clickListener: DialogClickListener) : Di
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(arguments?.getInt(PARAM_TITLE)!!)
 
-        if (arguments.getInt(PARAM_DESCRIPTION) != 0) {
-            builder.setMessage(arguments.getInt(PARAM_DESCRIPTION))
+        if (!TextUtils.isEmpty(arguments.getString(PARAM_DESCRIPTION))) {
+            builder.setMessage(arguments.getString(PARAM_DESCRIPTION))
         }
 
         builder.setPositiveButton(

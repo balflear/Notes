@@ -78,4 +78,7 @@ dependencies {
 
     // ViewPager circle-indicator
     implementation 'me.relex:circleindicator:2.1.4'
+
+    // Material time-dialogs
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 }

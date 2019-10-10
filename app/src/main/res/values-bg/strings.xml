@@ -2,20 +2,22 @@
 <resources>
     <string name="app_name">Бележник</string>
 
+    <!-- Options menu buttons -->
     <string name="action_save">Запис</string>
     <string name="action_delete">Изтриване</string>
     <string name="action_lock">Заключване</string>
     <string name="action_unlock">Отключване</string>
     <string name="action_settings">Настройки</string>
     <string name="action_reminder">Напомняне</string>
-    <string name="title">Заглавие</string>
-    <string name="description">Описание</string>
+    <string name="action_remove_reminder">Изтр. напомняне</string>
 
 
     <!-- Main activity -->
     <string name="title_my_notes">Моите бележки</string>
 
     <!-- Add note activity -->
+    <string name="title">Заглавие</string>
+    <string name="description">Описание</string>
     <string name="title_activity_add_note">Добави бележка</string>
     <string name="title_activity_modify_note">Редактирай бележка</string>
     <string name="msg_note_updated">Вашата бележка беше редактирана успешно.</string>
@@ -26,6 +28,7 @@
     <string name="msg_delete_note">Сигурни ли сте, че изкате да изтриете бележката?</string>
     <string name="msg_note_is_locked">Вашата бележка е заключена</string>
     <string name="msg_reminder_set">Напоняне за</string>
+    <string name="msg_reminder_removed">Reminder was removed successfully</string>
 
     <!-- Buttons -->
     <string name="button_ok">OK</string>
@@ -38,6 +41,8 @@
     <string name="title_authentication">Отключване</string>
     <string name="msg_authenticate_first">За да отключите бележката, първо тряба да се оторизирате.</string>
     <string name="btn_finish">finish</string>
+    <string name="dialog_title_remove_reminder">Премахване на напомняне</string>
+    <string name="dialog_desc_remove_reminder">Сигурни ли сте че искате да премахнете напомнянето за %1$s</string>
 
     <!-- OnBoarding screens -->
     <string name="onboarding_hello_title">Създайте бележка</string>

@@ -1,6 +1,6 @@
 package com.kgeorgiev.notes.domain
 
-import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -9,8 +9,13 @@ import java.util.*
 class DateFormatter {
 
     companion object {
+        var df = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         fun formatDate(date: Date): String {
-            return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date)
+            return df.format(date)
+        }
+
+        fun formatDate(dateInMs: Long): String {
+            return df.format(Date(dateInMs))
         }
     }
 }

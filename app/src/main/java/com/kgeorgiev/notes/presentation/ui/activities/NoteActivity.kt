@@ -1,12 +1,9 @@
 package com.kgeorgiev.notes.presentation.ui.activities
 
 import android.app.AlarmManager
-import android.app.DatePickerDialog
 import android.app.PendingIntent
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -16,6 +13,7 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
@@ -26,22 +24,29 @@ import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
 import com.kgeorgiev.notes.presentation.ui.dialogs.MessageDialogFragment
+import com.kgeorgiev.notes.presentation.ui.dialogs.MessageDialogFragment.DialogClickListener
 import com.kgeorgiev.notes.presentation.viewmodels.NotesViewModel
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_add_note.*
 import kotlinx.android.synthetic.main.activity_add_note.view.*
 import java.util.*
 import javax.inject.Inject
 
 
-class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
+class NoteActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactoryProvider: ViewModelFactoryProvider
 
     private lateinit var notesViewModel: NotesViewModel
     private var selectedNote: Note? = null
-    private lateinit var mediaPlayer: MediaPlayer
+
     private val myCalendar = Calendar.getInstance()
     private lateinit var menuAdd: MenuItem
+    private lateinit var menuReminder: MenuItem
+    private lateinit var menuRemoveReminder: MenuItem
+    private val DATE_PICKER_DIALOG_TAG = "date_picker_tag"
+    private val TIME_PICKER_DIALOG_TAG = "time_picker_tag"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         (application as App).appComponent.inject(this)
         setupActionBar()
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.completed)
+
         notesViewModel =
             ViewModelProviders.of(this, viewModelFactoryProvider).get(NotesViewModel::class.java)
     }
@@ -76,12 +81,16 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         val itemLock = menu.findItem(R.id.action_lock)
         val itemUnlock = menu.findItem(R.id.action_unlock)
         val itemReminder = menu.findItem(R.id.action_reminder)
+        val itemRemoveReminder = menu.findItem(R.id.action_remove_reminder)
+        menuReminder = itemReminder
+        menuRemoveReminder = itemRemoveReminder
 
         if (selectedNote == null) {// Means it's a new note case
             itemDelete.isVisible = false
             itemLock.isVisible = false
             itemUnlock.isVisible = false
             itemReminder.isVisible = false
+            itemRemoveReminder.isVisible = false
         }
 
         // Handle lock/unlock button state if device has hardware-fingerprint
@@ -92,6 +101,17 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
             } else {
                 itemUnlock.isVisible = false
                 itemLock.isVisible = true
+            }
+        }
+
+        // Handle reminder button visibility
+        if (selectedNote != null) {
+            if (selectedNote!!.dateOfReminder > 0) {
+                itemReminder.isVisible = false
+                itemRemoveReminder.isVisible = true
+            } else {
+                itemReminder.isVisible = true
+                itemRemoveReminder.isVisible = false
             }
         }
 
@@ -133,6 +153,11 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 showDatePickerDialog()
                 true
             }
+
+            R.id.action_remove_reminder -> {
+                showRemoveReminderDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -141,16 +166,6 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         onBackPressed()
         return true
     }
-
-    override fun onPositiveButtonClicked() {
-        //TODO: Check if there is reminder for this note, and remove it too
-        deleteNote(selectedNote!!)
-    }
-
-    override fun onNegativeButtonClicked() {
-        // Does nothing for now
-    }
-
 
     private fun insertOrUpdateNote() {
         if (selectedNote != null) {
@@ -171,12 +186,12 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         }
 
         notesViewModel.insertNote(Note(title, description, Date()))
-        mediaPlayer.start()
+        playSuccessSound()
         Toast.makeText(this, getString(R.string.msg_note_added), Toast.LENGTH_LONG).show()
         finish()
     }
 
-    private fun updateNote(noteToUpdate: Note?) {
+    private fun updateNote(noteToUpdate: Note?, updateMsg: String = getString(R.string.msg_note_updated)) {
         val title = etTitle.text.toString()
         val description = etDescription.text.toString()
 
@@ -189,21 +204,12 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         noteToUpdate?.title = title
         noteToUpdate?.description = description
 
-        mediaPlayer.start()
+        playSuccessSound()
         notesViewModel.updateNote(noteToUpdate!!)
-        Toast.makeText(this, getString(R.string.msg_note_updated), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, updateMsg, Toast.LENGTH_LONG).show()
         finish()
     }
 
-    private fun showDeleteNoteDialog() {
-        val messageDialogFragment =
-            MessageDialogFragment.newInstance(
-                titleResId = R.string.dialog_title_delete_note,
-                dialogClickListener = this
-            )
-
-        messageDialogFragment.show(supportFragmentManager, "")
-    }
 
     private fun deleteNote(noteToDelete: Note) {
         notesViewModel.deleteNote(noteToDelete)
@@ -211,7 +217,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         finish()
     }
 
-    private var date: DatePickerDialog.OnDateSetListener =
+    private var datePickerListener: DatePickerDialog.OnDateSetListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
@@ -221,32 +227,93 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         }
 
     private var timePickerListener: TimePickerDialog.OnTimeSetListener =
-        TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        TimePickerDialog.OnTimeSetListener { timePicker, hour, minute, seconds ->
             myCalendar.set(Calendar.HOUR_OF_DAY, hour)
             myCalendar.set(Calendar.MINUTE, minute)
             myCalendar.set(Calendar.SECOND, 0)
 
-            scheduleNotification(myCalendar.timeInMillis)
-
-            showToastMsg(getString(R.string.msg_reminder_set) + " ${DateFormatter.formatDate(myCalendar.time)}")
+            scheduleAlarm(myCalendar.timeInMillis, selectedNote!!)
+            playSuccessSound()
         }
 
+    private fun showDeleteNoteDialog() {
+        val messageDialogFragment =
+            MessageDialogFragment.newInstance(
+                titleResId = R.string.dialog_title_delete_note,
+                dialogClickListener = object : DialogClickListener {
+                    override fun onPositiveButtonClicked() {
+                        removeAlarm(selectedNote!!)
+                        deleteNote(selectedNote!!)
+                        playSuccessSound()
+                    }
+
+                    override fun onNegativeButtonClicked() {
+                        // No impl needed here
+                    }
+                }
+            )
+
+        messageDialogFragment.show(supportFragmentManager, "")
+    }
+
+    private fun showRemoveReminderDialog() {
+        val descriptionMsg = String.format(
+            getString(R.string.dialog_desc_remove_reminder),
+            DateFormatter.formatDate(selectedNote!!.dateOfReminder)
+        )
+
+        val messageDialogFragment =
+            MessageDialogFragment.newInstance(
+                titleResId = R.string.dialog_title_remove_reminder,
+                descriptionText = descriptionMsg,
+                dialogClickListener = object : DialogClickListener {
+                    override fun onPositiveButtonClicked() {
+                        removeAlarm(selectedNote!!)
+                        val note = selectedNote
+                        note?.dateOfReminder = 0 // reset reminder
+                        updateNote(note, getString(R.string.msg_reminder_removed))
+
+                        menuRemoveReminder.isVisible = false
+                        menuReminder.isVisible = true
+                    }
+
+                    override fun onNegativeButtonClicked() {
+                        //TODO does nothing
+                    }
+
+                }
+            )
+
+        messageDialogFragment.show(supportFragmentManager, "")
+    }
+
     private fun showDatePickerDialog() {
-        DatePickerDialog(
-            this, date,
+        val datePickerDialog = DatePickerDialog.newInstance(
+            datePickerListener,
             myCalendar.get(Calendar.YEAR),
             myCalendar.get(Calendar.MONTH),
             myCalendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+        datePickerDialog.minDate = myCalendar
+        datePickerDialog.setOkText(R.string.button_ok)
+        datePickerDialog.setCancelText(R.string.button_cancel)
+        datePickerDialog.setOkColor(ContextCompat.getColor(this, R.color.mdtp_white))
+        datePickerDialog.setCancelColor(ContextCompat.getColor(this, R.color.mdtp_white))
+        datePickerDialog.show(supportFragmentManager, DATE_PICKER_DIALOG_TAG)
     }
 
     private fun showTimePickerDialog() {
-        TimePickerDialog(
-            this, timePickerListener,
+        val timePickerDialog = TimePickerDialog.newInstance(
+            timePickerListener,
             myCalendar.get(Calendar.HOUR_OF_DAY),
             myCalendar.get(Calendar.MINUTE),
             true
-        ).show()
+        )
+        timePickerDialog.setOkText(R.string.button_ok)
+        timePickerDialog.setCancelText(R.string.button_cancel)
+        timePickerDialog.setOkColor(ContextCompat.getColor(this, R.color.mdtp_white))
+        timePickerDialog.setCancelColor(ContextCompat.getColor(this, R.color.mdtp_white))
+        timePickerDialog.show(supportFragmentManager, TIME_PICKER_DIALOG_TAG)
     }
 
     private fun startAnimations() {
@@ -289,33 +356,46 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         handler.postDelayed(runnable, 2000)
     }
 
-    private fun scheduleNotification(alarmTime: Long) {
-        val notificationIntent = Intent(this, NotificationsReceiver::class.java)
-        val bundle = Bundle()
-        bundle.putString(NotificationsReceiver.NOTIFICATION_TITLE_PARAM, selectedNote?.title)
-        bundle.putString(NotificationsReceiver.NOTIFICATION_TEXT_PARAM, selectedNote?.description)
-        bundle.putInt(NotificationsReceiver.NOTE_ID_PARAM, selectedNote!!.id)
-        notificationIntent.putExtras(bundle)
-        notificationIntent.action = "android.intent.action.NOTIFY"
-
-        val requestCode = selectedNote?.id
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                applicationContext,
-                requestCode!!,
-                notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-
+    private fun scheduleAlarm(alarmTime: Long, note: Note) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             alarmTime,
-            pendingIntent
+            makeAlarmPendingIntent(note)
         )
 
-        selectedNote?.dateOfReminder = myCalendar.timeInMillis
-        notesViewModel.updateNote(selectedNote!!)
+        note.dateOfReminder = myCalendar.timeInMillis
+        updateNote(
+            note,
+            getString(R.string.msg_reminder_set) + " ${DateFormatter.formatDate(myCalendar.time)}"
+        )
+    }
+
+    private fun removeAlarm(note: Note) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager.cancel(makeAlarmPendingIntent(note))
+    }
+
+    private fun makeAlarmPendingIntent(note: Note): PendingIntent {
+        val notificationIntent = Intent(this, NotificationsReceiver::class.java)
+        val bundle = Bundle()
+        bundle.putString(NotificationsReceiver.NOTIFICATION_TITLE_PARAM, note.title)
+        bundle.putString(NotificationsReceiver.NOTIFICATION_TEXT_PARAM, note.description)
+        bundle.putInt(NotificationsReceiver.NOTE_ID_PARAM, note.id)
+        notificationIntent.putExtras(bundle)
+        notificationIntent.action = "android.intent.action.NOTIFY"
+
+        val requestCode = note.id
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                applicationContext,
+                requestCode,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+        return pendingIntent
     }
 
     private fun initViewsAndListeners() {
