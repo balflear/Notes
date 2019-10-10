@@ -8,10 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.kgeorgiev.notes.App
@@ -38,6 +41,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
     private var selectedNote: Note? = null
     private lateinit var mediaPlayer: MediaPlayer
     private val myCalendar = Calendar.getInstance()
+    private lateinit var menuAdd: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,12 +64,14 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         }
 
         startAnimations()
-        initViews()
+        initViewsAndListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_add_edit, menu)
+        menuAdd = menu.findItem(R.id.action_add)
+        (menuAdd.actionView as ImageView).setImageResource(android.R.drawable.ic_menu_save)
         val itemDelete = menu.findItem(R.id.action_delete)
         val itemLock = menu.findItem(R.id.action_lock)
         val itemUnlock = menu.findItem(R.id.action_unlock)
@@ -88,6 +94,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 itemLock.isVisible = true
             }
         }
+
         return true
     }
 
@@ -97,11 +104,7 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_add -> {
-                if (selectedNote != null) {
-                    updateNote(selectedNote)
-                } else {
-                    insertNote()
-                }
+                insertOrUpdateNote()
                 true
             }
 
@@ -148,6 +151,14 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         // Does nothing for now
     }
 
+
+    private fun insertOrUpdateNote() {
+        if (selectedNote != null) {
+            updateNote(selectedNote)
+        } else {
+            insertNote()
+        }
+    }
 
     private fun insertNote() {
         val title = etTitle.text.toString()
@@ -252,6 +263,30 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
                 R.anim.fade_left_to_right_animation
             )
         )
+
+        if (selectedNote == null && menuAdd.actionView != null) {
+            // Start animation only if it's a new note
+            startSaveBtnAnimation()
+        }
+    }
+
+    private fun startSaveBtnAnimation() {
+        // Repeat Save btn bounce animation
+        val handler = Handler()
+        var counter = 0
+
+        val runnable = object : Runnable {
+            override fun run() {
+                counter++
+                menuAdd.actionView.startAnimation(AnimationUtils.loadAnimation(application, R.anim.bounce_animation))
+                handler.postDelayed(this, 5000)
+                if (counter == 3) {
+                    handler.removeCallbacks(this)
+                }
+            }
+        }
+
+        handler.postDelayed(runnable, 2000)
     }
 
     private fun scheduleNotification(alarmTime: Long) {
@@ -283,11 +318,21 @@ class NoteActivity : BaseActivity(), MessageDialogFragment.DialogClickListener {
         notesViewModel.updateNote(selectedNote!!)
     }
 
-    private fun initViews() {
+    private fun initViewsAndListeners() {
         if (selectedNote == null) {
             toolbar.toolbar_title.text = getString(R.string.title_activity_add_note)
         } else {
             toolbar.toolbar_title.text = getString(R.string.title_activity_modify_note)
+        }
+
+        etDescription.setOnEditorActionListener { textView, actionId, keyEvent ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    insertOrUpdateNote()
+                    true
+                }
+                else -> false
+            }
         }
     }
 

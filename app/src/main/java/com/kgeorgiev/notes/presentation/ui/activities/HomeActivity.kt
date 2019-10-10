@@ -131,12 +131,13 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
         // Normal opening of the screen
         notesViewModel.getNotes().observe(this, Observer {
             it?.let {
+                notesAdapter.updateValues(it as ArrayList<Note>)
+
                 if (it.isNotEmpty()) {
                     stopEmptyStateAnimation()
                 } else {
                     startEmptyStateAnimation()
                 }
-                notesAdapter.updateValues(it as ArrayList<Note>)
             }
         })
     }

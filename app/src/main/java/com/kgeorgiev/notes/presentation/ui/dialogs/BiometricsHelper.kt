@@ -4,6 +4,7 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.hardware.biometrics.BiometricManager
 import android.os.Build
+import androidx.biometric.BiometricPrompt
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import androidx.fragment.app.FragmentActivity
 import com.kgeorgiev.notes.R
@@ -18,25 +19,25 @@ class BiometricsHelper {
     companion object {
         private val executor: Executor by lazy {
             Executors.newSingleThreadExecutor()
-            //MainThreadExecutor()
         }
 
         fun showBiometricsPrompt(
             activity: FragmentActivity,
-            callback: androidx.biometric.BiometricPrompt.AuthenticationCallback
-        ) {
-            val promptInfo = androidx.biometric.BiometricPrompt.PromptInfo.Builder()
+            callback: BiometricPrompt.AuthenticationCallback
+        ): BiometricPrompt {
+            val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(activity.getString(R.string.title_authentication))
                 .setDescription(activity.getString(R.string.msg_authenticate_first))
                 .setDeviceCredentialAllowed(true)
                 .build()
 
             val biometricPrompt =
-                androidx.biometric.BiometricPrompt(
+                BiometricPrompt(
                     activity,
                     executor, callback
                 )
             biometricPrompt.authenticate(promptInfo)
+            return biometricPrompt
         }
 
         /**
