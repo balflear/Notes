@@ -21,25 +21,6 @@ class BiometricsHelper {
             Executors.newSingleThreadExecutor()
         }
 
-        fun showBiometricsPrompt(
-            activity: FragmentActivity,
-            callback: BiometricPrompt.AuthenticationCallback
-        ): BiometricPrompt {
-            val promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle(activity.getString(R.string.title_authentication))
-                .setDescription(activity.getString(R.string.msg_authenticate_first))
-                .setDeviceCredentialAllowed(true)
-                .build()
-
-            val biometricPrompt =
-                BiometricPrompt(
-                    activity,
-                    executor, callback
-                )
-            biometricPrompt.authenticate(promptInfo)
-            return biometricPrompt
-        }
-
         /**
          * Indicate whether this device can authenticate the user with biometrics
          * @return true if there are any available biometric sensors and biometrics are enrolled on the device, if not, return false
@@ -60,6 +41,26 @@ class BiometricsHelper {
                     return false
                 }
             }
+        }
+
+        fun showBiometricsPrompt(
+            activity: FragmentActivity,
+            callback: BiometricPrompt.AuthenticationCallback
+        ): BiometricPrompt {
+            val executor = Executors.newSingleThreadExecutor()
+            val promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle(activity.getString(R.string.title_authentication))
+                .setDescription(activity.getString(R.string.msg_authenticate_first))
+                .setDeviceCredentialAllowed(true)
+                .build()
+
+            val biometricPrompt =
+                BiometricPrompt(
+                    activity,
+                    executor, callback
+                )
+            biometricPrompt.authenticate(promptInfo)
+            return biometricPrompt
         }
     }
 }

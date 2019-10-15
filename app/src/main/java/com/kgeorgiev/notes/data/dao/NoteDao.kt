@@ -23,4 +23,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes_table WHERE id=:noteId")
     fun get(noteId: Int): Note
+
+    @Query("UPDATE notes_table SET reminder_date=:dateOfReminder WHERE id=:noteId")
+    fun updateNoteReminderTime(noteId: Int, dateOfReminder: Long)
 }

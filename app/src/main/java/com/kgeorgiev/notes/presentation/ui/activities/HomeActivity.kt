@@ -30,6 +30,8 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
     private lateinit var notesAdapter: NotesAdapter
 
+    lateinit var biometricPrompt: BiometricPrompt;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,7 +54,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     override fun onResume() {
         super.onResume()
 
-        if (intent.extras != null && intent.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM) > 0) {
+        if (intent.extras != null && intent.extras!!.getInt(NotificationsReceiver.NOTIFICATION_ID_PARAM) > 0) {
             handleNoteFromNotification()
         } else {
             handleNormalNote()
@@ -79,7 +81,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
 
     private fun showBiometricsDialog(noteToOpen: Note) {
-        BiometricsHelper.showBiometricsPrompt(
+        biometricPrompt = BiometricsHelper.showBiometricsPrompt(
             this,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -103,6 +105,8 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     private fun openNote(note: Note) {
         val intent = Intent(this, NoteActivity::class.java)
         intent.putExtra("note", note)
+        finish() // This is needed, because there is a bug with biometric api, and we need to destroy this activity
+        //https://stackoverflow.com/questions/58286606/biometricprompt-executor-and-or-callback-was-null
         startActivity(intent)
     }
 
@@ -147,7 +151,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
      */
     private fun handleNoteFromNotification() {
         // When open app from notification
-        val noteId = intent!!.extras!!.getInt(NotificationsReceiver.NOTE_ID_PARAM)
+        val noteId = intent!!.extras!!.getInt(NotificationsReceiver.NOTIFICATION_ID_PARAM)
         notesViewModel.getNote(noteId).observe(this, Observer {
             it?.let {
                 val currentNote = it[0]

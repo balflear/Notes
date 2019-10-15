@@ -16,6 +16,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected fun playSuccessSound() {
         mediaPlayer = MediaPlayer.create(this, R.raw.completed)
-        mediaPlayer.start()
+        mediaPlayer.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+            mediaPlayer.start()
+        })
     }
 }

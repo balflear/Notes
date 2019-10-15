@@ -47,6 +47,8 @@ class NoteActivity : BaseActivity() {
     private lateinit var menuRemoveReminder: MenuItem
     private val DATE_PICKER_DIALOG_TAG = "date_picker_tag"
     private val TIME_PICKER_DIALOG_TAG = "time_picker_tag"
+    private val MAX_SAVE_BTN_ANIMATIONS_COUNT = 3
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +117,12 @@ class NoteActivity : BaseActivity() {
             }
         }
 
+
+        // Set listener on the ImageView of the menu, then invoke the all menu
+        menuAdd.actionView.setOnClickListener {
+            this.onOptionsItemSelected(menuAdd)
+        }
+
         return true
     }
 
@@ -162,6 +170,12 @@ class NoteActivity : BaseActivity() {
         }
     }
 
+    // This is needed, because there is a bug with biometric api, and we need to destroy this activity
+    // https://stackoverflow.com/questions/58286606/biometricprompt-executor-and-or-callback-was-null
+    override fun onBackPressed() {
+        openHomeActivity()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -188,7 +202,7 @@ class NoteActivity : BaseActivity() {
         notesViewModel.insertNote(Note(title, description, Date()))
         playSuccessSound()
         Toast.makeText(this, getString(R.string.msg_note_added), Toast.LENGTH_LONG).show()
-        finish()
+        openHomeActivity()
     }
 
     private fun updateNote(noteToUpdate: Note?, updateMsg: String = getString(R.string.msg_note_updated)) {
@@ -207,14 +221,14 @@ class NoteActivity : BaseActivity() {
         playSuccessSound()
         notesViewModel.updateNote(noteToUpdate!!)
         Toast.makeText(this, updateMsg, Toast.LENGTH_LONG).show()
-        finish()
+        openHomeActivity()
     }
 
 
     private fun deleteNote(noteToDelete: Note) {
         notesViewModel.deleteNote(noteToDelete)
         Toast.makeText(this, getString(R.string.msg_note_deleted), Toast.LENGTH_LONG).show()
-        finish()
+        openHomeActivity()
     }
 
     private var datePickerListener: DatePickerDialog.OnDateSetListener =
@@ -331,7 +345,7 @@ class NoteActivity : BaseActivity() {
             )
         )
 
-        if (selectedNote == null && menuAdd.actionView != null) {
+        if (selectedNote == null) {
             // Start animation only if it's a new note
             startSaveBtnAnimation()
         }
@@ -344,11 +358,18 @@ class NoteActivity : BaseActivity() {
 
         val runnable = object : Runnable {
             override fun run() {
-                counter++
-                menuAdd.actionView.startAnimation(AnimationUtils.loadAnimation(application, R.anim.bounce_animation))
-                handler.postDelayed(this, 5000)
-                if (counter == 3) {
-                    handler.removeCallbacks(this)
+                if (::menuAdd.isInitialized) {
+                    counter++
+                    menuAdd.actionView.startAnimation(
+                        AnimationUtils.loadAnimation(
+                            application,
+                            R.anim.bounce_animation
+                        )
+                    )
+                    handler.postDelayed(this, 5000)
+                    if (counter == MAX_SAVE_BTN_ANIMATIONS_COUNT) {
+                        handler.removeCallbacks(this)
+                    }
                 }
             }
         }
@@ -382,7 +403,7 @@ class NoteActivity : BaseActivity() {
         val bundle = Bundle()
         bundle.putString(NotificationsReceiver.NOTIFICATION_TITLE_PARAM, note.title)
         bundle.putString(NotificationsReceiver.NOTIFICATION_TEXT_PARAM, note.description)
-        bundle.putInt(NotificationsReceiver.NOTE_ID_PARAM, note.id)
+        bundle.putInt(NotificationsReceiver.NOTIFICATION_ID_PARAM, note.id)
         notificationIntent.putExtras(bundle)
         notificationIntent.action = "android.intent.action.NOTIFY"
 
@@ -421,6 +442,10 @@ class NoteActivity : BaseActivity() {
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
 
+    private fun openHomeActivity() {
+        finish()
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 }

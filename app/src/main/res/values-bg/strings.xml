@@ -53,4 +53,7 @@
     <string name="onboarding_reminder_title">Напомняне</string>
     <string name="onboarding_reminder_description">Вие можете лесно да сложите дата и час в който искате телефона да ви изпрати Нотификация за конкретна бележка</string>
     или дръг метод на отключване.
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Моите бележки</string>
 </resources>

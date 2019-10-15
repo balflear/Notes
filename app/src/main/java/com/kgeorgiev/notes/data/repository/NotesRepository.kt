@@ -26,4 +26,7 @@ class NotesRepository {
     suspend fun updateNote(note: Note) = notesDao.update(note)
 
     suspend fun getNote(noteId: Int): Note = notesDao.get(noteId)
+
+    suspend fun updateNoteReminderTime(noteId: Int, dateOfReminder: Long) =
+        notesDao.updateNoteReminderTime(noteId, dateOfReminder)
 }

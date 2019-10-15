@@ -52,4 +52,7 @@
     <string name="onboarding_reminder_title">Set Reminder</string>
     <string name="onboarding_reminder_description">You can easly set a Reminder for your note and you will receive a Notification for it</string>
     <string name="btn_finish">finish</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">My notes</string>
 </resources>

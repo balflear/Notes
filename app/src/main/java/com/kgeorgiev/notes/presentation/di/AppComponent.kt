@@ -1,5 +1,6 @@
 package com.kgeorgiev.notes.presentation.di
 
+import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
 import com.kgeorgiev.notes.presentation.ui.activities.HomeActivity
 import com.kgeorgiev.notes.presentation.ui.activities.NoteActivity
 import com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity
@@ -17,4 +18,5 @@ interface AppComponent {
     fun inject(homeActivity: HomeActivity)
     fun inject(noteActivity: NoteActivity)
     fun inject(splashScreenActivity: SplashScreenActivity)
+    fun inject(notesReceiver: NotificationsReceiver)
 }

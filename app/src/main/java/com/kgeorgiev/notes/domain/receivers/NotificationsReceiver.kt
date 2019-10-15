@@ -9,8 +9,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
+import com.kgeorgiev.notes.data.repository.NotesRepository
 import com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
@@ -18,34 +25,48 @@ import com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity
  */
 class NotificationsReceiver : BroadcastReceiver() {
     private val DEFAULT_NOTIFICATION_CHANNEL_ID = "default_channel"
-    private val NOTIFICATION_CHANNEL_NAME = "My Notes"
     private val NOTIFICATION_CHANNEL_ID = "101"
-    private val NOTIFICATION_ID = 1000
+    private val DEFAULT_INTENT_REQUEST_CODE = 100
+
+    @Inject
+    lateinit var notesRepository: NotesRepository
+
+    private val job = Job()
+    private val ioScope = CoroutineScope(Dispatchers.IO + job)
+
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        (context?.applicationContext as App).appComponent.inject(this)
+
         val notificationManager =
             context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-
-        //val id = intent.getIntExtra(NOTIFICATION_ID, 0)
         val splashScreenIntent = Intent(context, SplashScreenActivity::class.java)
         splashScreenIntent.putExtras(intent!!)
 
         val pendingIntent =
-            PendingIntent.getActivity(context, 100, splashScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val notification = buildNotification(context, pendingIntent, intent.extras!!)
+            PendingIntent.getActivity(
+                context,
+                DEFAULT_INTENT_REQUEST_CODE,
+                splashScreenIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
+        val notification = buildNotification(context, pendingIntent, intent.extras!!)
+        val notificationId = intent.extras!!.getInt(NOTIFICATION_ID_PARAM)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
             val notificationChannel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
-                NOTIFICATION_CHANNEL_NAME,
+                context.getString(R.string.notification_channel_name),
                 importance
             )
             notificationManager.createNotificationChannel(notificationChannel)
         }
-        notificationManager.notify(NOTIFICATION_ID, notification)
+
+        notificationManager.notify(notificationId, notification)
+        resetNoteReminderInDB(notificationId)
     }
 
     private fun buildNotification(context: Context, pendingItent: PendingIntent, intentData: Bundle): Notification {
@@ -62,12 +83,20 @@ class NotificationsReceiver : BroadcastReceiver() {
         builder.setAutoCancel(true)
         builder.setChannelId(NOTIFICATION_CHANNEL_ID)
         return builder.build()
+    }
 
+    /**
+     * Reset note reminder time in database
+     */
+    private fun resetNoteReminderInDB(noteId: Int) {
+        ioScope.launch {
+            notesRepository.updateNoteReminderTime(noteId, 0)
+        }
     }
 
     companion object {
         val NOTIFICATION_TITLE_PARAM = "title_param"
         val NOTIFICATION_TEXT_PARAM = "text_param"
-        val NOTE_ID_PARAM = "note_id_param"
+        val NOTIFICATION_ID_PARAM = "note_id_param" // equals to note id
     }
 }

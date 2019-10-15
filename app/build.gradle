@@ -74,7 +74,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.0.7'
 
     // Biometrics
-    implementation 'androidx.biometric:biometric:1.0.0-beta02'
+    implementation 'androidx.biometric:biometric:1.0.0-rc01'
 
     // ViewPager circle-indicator
     implementation 'me.relex:circleindicator:2.1.4'
