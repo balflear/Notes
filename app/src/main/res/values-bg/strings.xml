@@ -10,6 +10,7 @@
     <string name="action_settings">Настройки</string>
     <string name="action_reminder">Напомняне</string>
     <string name="action_remove_reminder">Изтр. напомняне</string>
+    <string name="action_help">Помощ</string>
 
 
     <!-- Main activity -->
@@ -49,7 +50,7 @@
     <string name="onboarding_hello_description">Запазете вашите мисли лесно и бързо</string>
 
     <string name="onboarding_security_title">Защита</string>
-    <string name="onboarding_security_description">Защитете вашата бележка, така че само вие да можете да я отворите като използвате отпечатък</string>
+    <string name="onboarding_security_description">Защитете вашата бележка, така че само вие да можете да я отворите като използвате отпечатък, pin или др. механизъм</string>
     <string name="onboarding_reminder_title">Напомняне</string>
     <string name="onboarding_reminder_description">Вие можете лесно да сложите дата и час в който искате телефона да ви изпрати Нотификация за конкретна бележка</string>
     или дръг метод на отключване.

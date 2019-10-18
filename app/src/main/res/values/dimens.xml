@@ -1,7 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
 
-    <integer name="splash_anim_duration">2500</integer>
+    <integer name="splash_anim_duration">3000</integer>
 
     <dimen name="onboarding_imageview_width">120dp</dimen>
     <dimen name="onboarding_imageview_height">120dp</dimen>

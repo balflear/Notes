@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance" />
         <activity
             android:name="com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">

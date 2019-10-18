@@ -2,6 +2,8 @@ package com.kgeorgiev.notes.presentation.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.biometric.BiometricPrompt
@@ -16,6 +18,7 @@ import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.adapters.NotesAdapter
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
+import com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity
 import com.kgeorgiev.notes.presentation.viewmodels.NotesViewModel
 import kotlinx.android.synthetic.main.activity_add_note.view.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +26,6 @@ import kotlinx.android.synthetic.main.content_main.*
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
-
     @Inject
     lateinit var viewModelFactoryProvider: ViewModelFactoryProvider
     private lateinit var notesViewModel: NotesViewModel
@@ -111,22 +113,25 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     }
 
 
-    //TODO: Not needed for now
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        return when (item.itemId) {
+            R.id.action_help -> {
+                openOnboardingScreen()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     /**
      * Handle populations notes in normal case
@@ -190,5 +195,9 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
         if (lottieView.isAnimating) {
             lottieView.cancelAnimation()
         }
+    }
+
+    private fun openOnboardingScreen() {
+        startActivity(Intent(this, OnBoardingActivity::class.java))
     }
 }

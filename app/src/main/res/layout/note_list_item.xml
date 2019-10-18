@@ -64,7 +64,7 @@
                 card_view:layout_constraintTop_toTopOf="parent"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:src="@drawable/ic_lock_24px" />
+                android:src="@drawable/ic_lock" />
 
             <TextView
                 android:id="@+id/tvItemDescription"

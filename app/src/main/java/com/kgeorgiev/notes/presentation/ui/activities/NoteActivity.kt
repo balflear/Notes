@@ -56,7 +56,6 @@ class NoteActivity : BaseActivity() {
         (application as App).appComponent.inject(this)
         setupActionBar()
 
-
         notesViewModel =
             ViewModelProviders.of(this, viewModelFactoryProvider).get(NotesViewModel::class.java)
     }
@@ -223,7 +222,6 @@ class NoteActivity : BaseActivity() {
         Toast.makeText(this, updateMsg, Toast.LENGTH_LONG).show()
         openHomeActivity()
     }
-
 
     private fun deleteNote(noteToDelete: Note) {
         notesViewModel.deleteNote(noteToDelete)
