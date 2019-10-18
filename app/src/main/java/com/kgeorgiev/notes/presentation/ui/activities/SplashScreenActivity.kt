@@ -24,17 +24,17 @@ class SplashScreenActivity : AppCompatActivity() {
         val animDuration = resources.getInteger(R.integer.splash_anim_duration).toLong()
         (applicationContext as App).appComponent.inject(this)
 
-        tvSplashText.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation)
+        layoutSplashScreen.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation)
 
 
         Handler().postDelayed({
-            if (lottieView.isAnimating) {
-                lottieView.cancelAnimation()
-            }
+            //            if (lottieView.isAnimating) {
+//                lottieView.cancelAnimation()
+//            }
             finish()
 
             handleNextScreen()
-        }, animDuration)
+        }, animDuration + 500)
     }
 
     private fun handleNextScreen() {

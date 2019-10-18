@@ -73,7 +73,6 @@ class NotificationsReceiver : BroadcastReceiver() {
         val notificationTitle = intentData.getString(NOTIFICATION_TITLE_PARAM)
         val notificationText = intentData.getString(NOTIFICATION_TEXT_PARAM)
 
-
         val builder = NotificationCompat.Builder(context, DEFAULT_NOTIFICATION_CHANNEL_ID)
         builder.setContentIntent(pendingItent)
         builder.setContentTitle(notificationTitle)

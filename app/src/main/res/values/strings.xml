@@ -11,7 +11,6 @@
     <string name="action_remove_reminder">Remove reminder</string>
     <string name="action_help">Help</string>
 
-
     <!-- Main activity -->
     <string name="title_my_notes">My notes</string>
 
@@ -29,7 +28,6 @@
     <string name="msg_note_is_locked">Your note is locked</string>
     <string name="msg_reminder_set">Reminder set for</string>
     <string name="msg_reminder_removed">Reminder was removed successfully</string>
-
 
     <!-- Buttons -->
     <string name="button_ok">OK</string>
@@ -49,9 +47,9 @@
     <string name="onboarding_hello_description">Save your thoughts easy and fast</string>
 
     <string name="onboarding_security_title">Protect your note</string>
-    <string name="onboarding_security_description">Protect your note after it\'s created by tapping on it and then use the context menu upper right corner</string>
+    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication</string>
     <string name="onboarding_reminder_title">Set Reminder</string>
-    <string name="onboarding_reminder_description">You can easly set a Reminder for your note and you will receive a Notification for it</string>
+    <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it</string>
     <string name="btn_finish">finish</string>
 
     <!-- Notifications -->
