@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        
+    <string name="app_name">Mein Notizbuch</string>
+
+        
+    <!-- Options menu buttons -->
+        
+    <string name="action_save">Speichern</string>
+        
+    <string name="action_lock">Sperren</string>
+        
+    <string name="action_unlock">Entsperren</string>
+        
+    <string name="action_delete">Löschen</string>
+        
+    <string name="action_settings">Einstellungen</string>
+        
+    <string name="action_reminder">Erinnerung</string>
+        
+    <string name="action_remove_reminder">Erinnerung entfernen</string>
+        
+    <string name="action_help">Hilfe</string>
+
+        
+    <!-- Main activity -->
+        
+    <string name="title_my_notes">Meine Notizen</string>
+
+      
+    <!-- Add note activity -->
+        
+    <string name="description">Beschreibung</string>
+        
+    <string name="title">Titel</string>
+        
+    <string name="title_activity_add_note">Notiz hinzufügen</string>
+        
+    <string name="title_activity_modify_note">Notiz bearbeiten</string>
+        
+    <string name="msg_note_updated">Ihre Notiz wurde erfolgreich aktualisiert.</string>
+        
+    <string name="msg_note_added">Ihre Notiz wurde erfolgreich hinzugefügt.</string>
+        
+    <string name="msg_note_deleted">Ihre Notiz wurde gelöscht.</string>
+        
+    <string name="msg_please_fill_fields">Bitte geben Sie Titel und Beschreibung ein</string>
+        
+    <string name="msg_create_your_first_note">Erstellen Sie Ihre erste Notiz</string>
+        
+    <string name="msg_delete_note">Möchten Sie diese Notiz wirklich löschen?</string>
+        
+    <string name="msg_note_is_locked">Ihre Notiz ist gesperrt</string>
+        
+    <string name="msg_reminder_set">Erinnerungssatz für</string>
+        
+    <string name="msg_reminder_removed">Erinnerung wurde erfolgreich entfernt.</string>
+
+        
+    <!-- Buttons -->
+        
+    <string name="button_ok">OK</string>
+        
+    <string name="button_cancel">Abbrechen</string>
+        
+    <string name="button_yes">Ja</string>
+        
+    <string name="button_no">Nein</string>
+
+        
+    <!-- Dialogs -->
+        
+    <string name="dialog_title_delete_note">Notiz löschen</string>
+        
+    <string name="title_authentication">Authentifizierung</string>
+        
+    <string name="msg_authenticate_first">Um Ihre Notiz zu öffnen, müssen Sie sich zuerst authentifizieren.</string>
+        
+    <string name="dialog_title_remove_reminder">Erinnerung entfernen</string>
+        
+    <string name="dialog_desc_remove_reminder">Möchten Sie die Erinnerung für% 1 $ s wirklich entfernen?</string>
+
+        
+    <!-- OnBoarding screens -->
+        
+    <string name="onboarding_hello_title">Speichern Sie Ihre Notiz</string>
+        
+    <string name="onboarding_hello_description">Speichern Sie Ihre Gedanken einfach und schnell auf Ihrem Gerät.</string>
+
+        
+    <string name="onboarding_security_title">Schützen Sie Ihre Notiz</string>
+        
+    <string name="onboarding_security_description">Schützen Sie Ihre Notiz einfach mit einem Fingerabdruck, einer PIN oder einer anderen Authentifizierungsmethode</string>
+        
+    <string name="onboarding_reminder_title">Erinnerung festlegen</string>
+        
+    <string name="onboarding_reminder_description">Legen Sie einfach eine Erinnerung für Ihre Notizen fest und erhalten Sie eine Benachrichtigung</string>
+        
+    <string name="btn_finish">beenden</string>
+
+        <!-- Notifications -->
+        
+    <string name="notification_channel_name">Meine Notizen</string>
+</resources>

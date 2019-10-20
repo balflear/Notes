@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мой блокнот</string>
+
+    <!-- Options menu buttons -->
+    <string name="action_save">Сохранить</string>
+    <string name="action_lock">Блокировка</string>
+    <string name="action_unlock">Разблокировать</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_settings">Настройки</string>    
+    <string name="action_reminder">Напоминание</string>
+    <string name="action_remove_reminder">Удалить напоминание</string>
+    <string name="action_help">Справка</string>
+
+    <!-- Main activity -->
+    <string name="title_my_notes">Мои заметки</string>
+
+    <!-- Add note activity -->
+    <string name="description">Description</string>
+    <string name="title">Title</string>    
+    <string name="title_activity_add_note">Добавить заметку</string>
+    <string name="title_activity_modify_note">Редактировать заметку</string>
+    <string name="msg_note_updated">Ваша заметка была успешно обновлена.</string>
+    <string name="msg_note_added">Ваша заметка была успешно добавлена.</string>
+    <string name="msg_create_your_first_note">Создайте свою первую заметку</string>
+    <string name="msg_note_deleted">Ваша заметка была удалена.</string>
+    <string name="msg_please_fill_fields">Пожалуйста, заполните заголовок и описание</string>
+    <string name="msg_delete_note">Вы уверены, что хотите удалить эту заметку?</string>
+    <string name="msg_note_is_locked">Ваша заметка заблокирована</string>
+    <string name="msg_reminder_set">Набор напоминаний для</string>
+    <string name="msg_reminder_removed">Напоминание было успешно удалено.</string>
+
+    <!-- Buttons -->
+    <string name="button_ok">ОК</string>
+    <string name="button_cancel">Отмена</string>    
+    <string name="button_yes">Да</string>
+    <string name="button_no">Нет</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_title_delete_note">Удалить заметку</string>
+    <string name="title_authentication">Аутентификация</string>
+    <string name="msg_authenticate_first">Чтобы открыть заметку, сначала необходимо пройти аутентификацию.</string>
+    <string name="dialog_title_remove_reminder">Удалить напоминание</string>
+    <string name="dialog_desc_remove_reminder">Вы уверены, что хотите удалить напоминание для %1$s</string>
+
+
+     <!-- OnBoarding screens -->
+    <string name="onboarding_hello_title">Сохранить заметку</string>
+    <string name="onboarding_hello_description">Сохраняйте свои мысли легко и быстро на своем устройстве.</string>
+    <string name="onboarding_security_title">Защитите свою заметку</string>
+    <string name="onboarding_security_description">Защитите свою заметку легко, используя отпечаток пальца, пин-код или другой метод аутентификации</string>
+    <string name="onboarding_reminder_title">Установить напоминание</string>
+    <string name="onboarding_reminder_description">Легко установите напоминание для своих заметок и получите уведомление для него</string>
+    <string name="btn_finish">конец</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Мои заметки</string>
+</resources>

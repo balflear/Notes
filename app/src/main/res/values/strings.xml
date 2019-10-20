@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">My Notes</string>
 
     <!-- Options menu buttons -->
     <string name="action_save">Save</string>
@@ -19,15 +19,15 @@
     <string name="title">Title</string>
     <string name="title_activity_add_note">Add note</string>
     <string name="title_activity_modify_note">Edit note</string>
-    <string name="msg_note_updated">Your note was updated successfully</string>
-    <string name="msg_note_added">Your note was added successfully</string>
+    <string name="msg_note_updated">Your note was updated successfully.</string>
+    <string name="msg_note_added">Your note was added successfully.</string>
     <string name="msg_note_deleted">Your note was deleted.</string>
-    <string name="msg_please_fill_fields">Please fill title and description.</string>
+    <string name="msg_please_fill_fields">Please fill title and description</string>
     <string name="msg_create_your_first_note">Create your first note</string>
     <string name="msg_delete_note">Are you sure you want to delete this note?</string>
     <string name="msg_note_is_locked">Your note is locked</string>
     <string name="msg_reminder_set">Reminder set for</string>
-    <string name="msg_reminder_removed">Reminder was removed successfully</string>
+    <string name="msg_reminder_removed">Reminder was removed successfully.</string>
 
     <!-- Buttons -->
     <string name="button_ok">OK</string>
@@ -38,16 +38,16 @@
     <!-- Dialogs -->
     <string name="dialog_title_delete_note">Delete note</string>
     <string name="title_authentication">Authentication</string>
-    <string name="msg_authenticate_first">To open your note, you need to authenticate yourself.</string>
+    <string name="msg_authenticate_first">To open your note, you need to authenticate yourself first.</string>
     <string name="dialog_title_remove_reminder">Remove reminder</string>
     <string name="dialog_desc_remove_reminder">Are you sure you want remove reminder for %1$s</string>
 
     <!-- OnBoarding screens -->
     <string name="onboarding_hello_title">Save your note</string>
-    <string name="onboarding_hello_description">Save your thoughts easy and fast</string>
+    <string name="onboarding_hello_description">Save your thoughts easy and fast on your device.</string>
 
     <string name="onboarding_security_title">Protect your note</string>
-    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication</string>
+    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication method</string>
     <string name="onboarding_reminder_title">Set Reminder</string>
     <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it</string>
     <string name="btn_finish">finish</string>

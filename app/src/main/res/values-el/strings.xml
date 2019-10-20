@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        
+    <string name="app_name">Το σημειωματάριό μου</string>
+
+        <!-- Options menu buttons -->
+        
+    <string name="action_save">Αποθήκευση</string>
+        
+    <string name="action_lock">Κλείδωμα</string>
+        
+    <string name="action_unlock">Ξεκλείδωμα</string>
+        
+    <string name="action_delete">Διαγραφή</string>
+        
+    <string name="action_settings">Ρυθμίσεις</string>
+        
+    <string name="action_reminder">Υπενθύμιση</string>
+        
+    <string name="action_remove_reminder">Κατάργηση υπενθύμισης</string>
+        
+    <string name="action_help">Βοήθεια</string>
+
+        <!-- Main activity -->
+        
+    <string name="title_my_notes">Οι σημειώσεις μου</string>
+
+        <!-- Add note activity -->
+        
+    <string name="description">Περιγραφή</string>
+        
+    <string name="title">Τίτλος</string>
+        
+    <string name="title_activity_add_note">Προσθέστε τη σημείωση</string>
+        
+    <string name="title_activity_modify_note">Επεξεργασία σημείωσης</string>
+        
+    <string name="msg_note_updated">Η σημείωση ενημερώθηκε με επιτυχία.</string>
+        
+    <string name="msg_note_added">Η σημείωση προστέθηκε με επιτυχία.</string>
+        
+    <string name="msg_note_deleted">Η σημείωση σας έχει διαγραφεί.</string>
+        
+    <string name="msg_please_fill_fields">Παρακαλώ συμπληρώστε τον τίτλο και την περιγραφή</string>
+        
+    <string name="msg_create_your_first_note">Δημιουργήστε την πρώτη σας σημείωση</string>
+        
+    <string name="msg_delete_note">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη σημείωση;</string>
+        
+    <string name="msg_note_is_locked">Η σημείωση σας είναι κλειδωμένη</string>
+        
+    <string name="msg_reminder_set">Το θυμητό έχει οριστεί για</string>
+        
+    <string name="msg_reminder_removed">Η υπενθύμιση καταργήθηκε με επιτυχία.</string>
+
+        <!-- Buttons -->
+        
+    <string name="button_ok">OK</string>
+        
+    <string name="button_cancel">Ακύρωση</string>
+        
+    <string name="button_yes">Ναι</string>
+        
+    <string name="button_no">Όχι</string>
+
+        <!-- Dialogs -->
+        
+    <string name="dialog_title_delete_note">Διαγράψτε τη σημείωση</string>
+        
+    <string name="title_authentication">Έλεγχος ταυτότητας</string>
+        
+    <string name="msg_authenticate_first">Για να ανοίξετε τη σημείωσή σας, πρέπει πρώτα να πιστοποιήσετε τον εαυτό σας.</string>
+        
+    <string name="dialog_title_remove_reminder">Κατάργηση υπενθύμισης</string>
+        
+    <string name="dialog_desc_remove_reminder">Είστε βέβαιοι ότι θέλετε να καταργήσετε την υπενθύμιση για το% 1 $ s</string>
+
+        <!-- OnBoarding screens -->
+        
+    <string name="onboarding_hello_title">Αποθήκευση της σημείωσής σας</string>
+        
+    <string name="onboarding_hello_description">Αποθηκεύστε τις σκέψεις σας εύκολα και γρήγορα στη συσκευή σας.</string>
+
+        
+    <string name="onboarding_security_title">Προστατεύστε τη σημείωση σας</string>
+        
+    <string name="onboarding_security_description">Προστατεύστε τη σημείωση σας εύκολα, χρησιμοποιώντας δακτυλικό αποτύπωμα, ακίδα ή άλλη μέθοδο ελέγχου ταυτότητας</string>
+        
+    <string name="onboarding_reminder_title">Ορισμός υπενθύμισης</string>
+        
+    <string name="onboarding_reminder_description">Ορίστε εύκολα την υπενθύμιση για τις σημειώσεις σας και λάβετε μια ειδοποίηση γι \'αυτήν</string>
+        
+    <string name="btn_finish">τελειώσει</string>
+
+        <!-- Notifications -->
+        
+    <string name="notification_channel_name">Οι σημειώσεις μου</string>
+</resources>
