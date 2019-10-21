@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+#----LEadbolt
+-dontwarn android.support.v4.**
+-keep class com.google.** { *; }
+-dontwarn com.google.**
+
+-keep class com.apptracker.** { *; }
+-dontwarn com.apptracker.**
+-keepclassmembers class **.R$* {
+	public static <fields>;
+}
+-keep class **.R$*
