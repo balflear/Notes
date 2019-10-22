@@ -161,7 +161,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
             it?.let {
                 val currentNote = it[0]
 
-                currentNote?.let {
+                currentNote.let {
                     currentNote.dateOfReminder = 0 // Reset scheduled date
                     notesViewModel.updateNote(currentNote)
                 }
