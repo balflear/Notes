@@ -6,6 +6,7 @@
 
     <color name="lightBlue">#2ACABE</color>
     <color name="Blue">#E4F8DF</color>
+    <color name="colorWhite">#FFFFFF</color>
 
-    <color name="primary_button_color">#2196F3</color>
+    <color name="primary_button_color">#2ACABE</color>
 </resources>

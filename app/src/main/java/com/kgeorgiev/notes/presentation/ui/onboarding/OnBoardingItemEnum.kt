@@ -24,6 +24,11 @@ enum class OnBoardingItemEnum constructor(
         R.string.onboarding_reminder_title,
         R.string.onboarding_reminder_description,
         R.drawable.onboarding_reminder
+    ),
+    ONBOARDING_SHARE(
+        R.string.onboarding_share_title,
+        R.string.onboarding_share_description,
+        R.drawable.onboarding_share
     );
 
     fun getDescriptionResId() = mDescriptionResId

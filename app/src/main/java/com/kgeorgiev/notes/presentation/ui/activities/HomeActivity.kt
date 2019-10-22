@@ -21,7 +21,7 @@ import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
 import com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity
 import com.kgeorgiev.notes.presentation.viewmodels.NotesViewModel
 import kotlinx.android.synthetic.main.activity_add_note.view.*
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
         (application as App).appComponent.inject(this)
         setSupportActionBar(toolbar)
         supportActionBar?.title = null

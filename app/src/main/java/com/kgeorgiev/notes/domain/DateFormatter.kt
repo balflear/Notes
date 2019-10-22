@@ -9,13 +9,14 @@ import java.util.*
 class DateFormatter {
 
     companion object {
-        var df = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        private var dateFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+
         fun formatDate(date: Date): String {
-            return df.format(date)
+            return dateFormatter.format(date)
         }
 
         fun formatDate(dateInMs: Long): String {
-            return df.format(Date(dateInMs))
+            return dateFormatter.format(Date(dateInMs))
         }
     }
 }

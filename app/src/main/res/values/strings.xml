@@ -48,9 +48,13 @@
     <string name="onboarding_hello_description">Save your thoughts easy and fast on your device.</string>
 
     <string name="onboarding_security_title">Protect your note</string>
-    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication method</string>
+    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication method.</string>
+
     <string name="onboarding_reminder_title">Set Reminder</string>
-    <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it</string>
+    <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it.</string>
+
+    <string name="onboarding_share_title" translatable="false">Sharing</string>
+    <string name="onboarding_share_description" translatable="false">Share your notes easy with your family and friends.</string>
     <string name="btn_finish">finish</string>
 
     <!-- Notifications -->
