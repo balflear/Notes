@@ -32,7 +32,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
     private lateinit var notesAdapter: NotesAdapter
 
-    lateinit var biometricPrompt: BiometricPrompt;
+    lateinit var biometricPrompt: BiometricPrompt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +94,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
+                    // No impl needed for now
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
