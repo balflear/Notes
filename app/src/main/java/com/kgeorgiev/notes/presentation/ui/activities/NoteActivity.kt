@@ -446,4 +446,13 @@ class NoteActivity : BaseActivity() {
         finish()
         startActivity(Intent(this, HomeActivity::class.java))
     }
+
+    //TODO: Impl such functionality
+    private fun startShareIntent() {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Your score and Some extra text")
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "The title")
+        startActivity(Intent.createChooser(shareIntent, "Share..."))
+    }
 }
