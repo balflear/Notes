@@ -20,6 +20,7 @@
     <string name="action_remove_reminder">Κατάργηση υπενθύμισης</string>
         
     <string name="action_help">Βοήθεια</string>
+    <string name="action_share">Κοινή χρήση</string>
 
         <!-- Main activity -->
         
@@ -95,4 +96,5 @@
         <!-- Notifications -->
         
     <string name="notification_channel_name">Οι σημειώσεις μου</string>
+
 </resources>

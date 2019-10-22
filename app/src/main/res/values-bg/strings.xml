@@ -11,6 +11,7 @@
     <string name="action_reminder">Напомняне</string>
     <string name="action_remove_reminder">Изтр. напомняне</string>
     <string name="action_help">Помощ</string>
+    <string name="action_share">Споделяне</string>
 
     <!-- Main activity -->
     <string name="title_my_notes">Моите бележки</string>
@@ -56,4 +57,5 @@
 
     <!-- Notifications -->
     <string name="notification_channel_name">Моите бележки</string>
+
 </resources>
