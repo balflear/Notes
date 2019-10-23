@@ -59,7 +59,6 @@ class OnBoardingActivity : AppCompatActivity() {
     }
 
     private fun hideFinishButton() {
-        btnOnBoardingFinish.animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
         btnOnBoardingFinish.visibility = View.INVISIBLE
     }
 
