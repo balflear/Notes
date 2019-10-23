@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.getResourceIdOrThrow
 import com.kgeorgiev.notes.R
 import kotlinx.android.synthetic.main.on_boarding_view.view.*
@@ -55,5 +56,9 @@ constructor(
 
     fun setImageDrawable(drawable: Drawable) {
         currentView.ivOnBoarding.setImageDrawable(drawable)
+    }
+
+    fun getImageView(): AppCompatImageView? {
+        return currentView.ivOnBoarding
     }
 }

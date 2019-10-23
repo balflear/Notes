@@ -20,6 +20,7 @@
     <string name="action_remove_reminder">Κατάργηση υπενθύμισης</string>
         
     <string name="action_help">Βοήθεια</string>
+    <string name="action_share">Κοινή χρήση</string>
 
         <!-- Main activity -->
         
@@ -89,10 +90,14 @@
     <string name="onboarding_reminder_title">Ορισμός υπενθύμισης</string>
         
     <string name="onboarding_reminder_description">Ορίστε εύκολα την υπενθύμιση για τις σημειώσεις σας και λάβετε μια ειδοποίηση γι \'αυτήν</string>
-        
+
+    <string name="onboarding_share_title">Κοινή χρήση</string>   
+    <string name="onboarding_share_description">Μοιραστείτε εύκολα τις σημειώσεις σας με την οικογένεια και τους φίλους σας</string>
+     
     <string name="btn_finish">τελειώσει</string>
 
         <!-- Notifications -->
         
     <string name="notification_channel_name">Οι σημειώσεις μου</string>
+
 </resources>

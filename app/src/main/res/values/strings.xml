@@ -10,6 +10,7 @@
     <string name="action_reminder">Reminder</string>
     <string name="action_remove_reminder">Remove reminder</string>
     <string name="action_help">Help</string>
+    <string name="action_share">Share</string>
 
     <!-- Main activity -->
     <string name="title_my_notes">My notes</string>
@@ -47,9 +48,13 @@
     <string name="onboarding_hello_description">Save your thoughts easy and fast on your device.</string>
 
     <string name="onboarding_security_title">Protect your note</string>
-    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication method</string>
+    <string name="onboarding_security_description">Protect your note easily, using fingerprint, pin or another authentication method.</string>
+
     <string name="onboarding_reminder_title">Set Reminder</string>
-    <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it</string>
+    <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it.</string>
+
+    <string name="onboarding_share_title">Sharing</string>
+    <string name="onboarding_share_description">Share your notes easy with your family and friends.</string>
     <string name="btn_finish">finish</string>
 
     <!-- Notifications -->

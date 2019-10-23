@@ -1,35 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        
     <string name="app_name">Mein Notizbuch</string>
 
-        
     <!-- Options menu buttons -->
-        
     <string name="action_save">Speichern</string>
-        
     <string name="action_lock">Sperren</string>
-        
     <string name="action_unlock">Entsperren</string>
-        
     <string name="action_delete">Löschen</string>
-        
-    <string name="action_settings">Einstellungen</string>
-        
+    <string name="action_settings">Einstellungen</string>    
     <string name="action_reminder">Erinnerung</string>
-        
     <string name="action_remove_reminder">Erinnerung entfernen</string>
-        
     <string name="action_help">Hilfe</string>
+    <string name="action_share">Teilen</string>
 
         
     <!-- Main activity -->
-        
     <string name="title_my_notes">Meine Notizen</string>
 
       
     <!-- Add note activity -->
-        
     <string name="description">Beschreibung</string>
         
     <string name="title">Titel</string>
@@ -95,10 +84,12 @@
     <string name="onboarding_reminder_title">Erinnerung festlegen</string>
         
     <string name="onboarding_reminder_description">Legen Sie einfach eine Erinnerung für Ihre Notizen fest und erhalten Sie eine Benachrichtigung</string>
-        
+    <string name="onboarding_share_title">Teilen</string>
+    <string name="onboarding_share_description">Teilen Sie Ihre Notizen ganz einfach mit Ihrer Familie und Freunden</string>
     <string name="btn_finish">beenden</string>
 
         <!-- Notifications -->
         
     <string name="notification_channel_name">Meine Notizen</string>
+
 </resources>

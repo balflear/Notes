@@ -39,9 +39,10 @@ class NotificationsReceiver : BroadcastReceiver() {
         (context?.applicationContext as App).appComponent.inject(this)
 
         val notificationManager =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val splashScreenIntent = Intent(context, SplashScreenActivity::class.java)
+        //splashScreenIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         splashScreenIntent.putExtras(intent!!)
 
         val pendingIntent =
@@ -94,8 +95,8 @@ class NotificationsReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        val NOTIFICATION_TITLE_PARAM = "title_param"
-        val NOTIFICATION_TEXT_PARAM = "text_param"
-        val NOTIFICATION_ID_PARAM = "note_id_param" // equals to note id
+        const val NOTIFICATION_TITLE_PARAM = "title_param"
+        const val NOTIFICATION_TEXT_PARAM = "text_param"
+        const val NOTIFICATION_ID_PARAM = "note_id_param" // equals to note id
     }
 }

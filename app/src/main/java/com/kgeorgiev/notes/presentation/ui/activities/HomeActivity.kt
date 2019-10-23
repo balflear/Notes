@@ -2,21 +2,14 @@ package com.kgeorgiev.notes.presentation.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.RelativeLayout
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.apptracker.android.nativead.ATNativeAd
-import com.apptracker.android.nativead.ATNativeAdCollection
-import com.apptracker.android.nativead.ATNativeListener
-import com.apptracker.android.nativead.template.ATNativeAdView
-import com.apptracker.android.track.AppTracker
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
@@ -28,10 +21,9 @@ import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
 import com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity
 import com.kgeorgiev.notes.presentation.viewmodels.NotesViewModel
 import kotlinx.android.synthetic.main.activity_add_note.view.*
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
 import javax.inject.Inject
-
 
 class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     @Inject
@@ -42,45 +34,9 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
     lateinit var biometricPrompt: BiometricPrompt
 
-    var nativeAd: ATNativeAd? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        AppTracker.startSession(applicationContext, "key", true)
-        AppTracker.setNativeListener(object : ATNativeListener {
-            override fun onAdClicked(p0: ATNativeAd?) {
-            }
-
-            override fun onAdDisplayed(p0: ATNativeAd?) {
-            }
-
-            override fun onAdsLoaded(adCollection: ATNativeAdCollection?) {
-                //called once loadNativeAds call is successful
-                // use this method to setup your views and display the Ad(s)
-
-                Log.e("TAG", "Ads loaded!!!");
-                val ads = adCollection?.ads
-                // an array of ATNativeAd objects
-
-                //int adCount = ads.size(); // get number of ads returned by the server, if needed
-
-                //display the first ad returned from server
-                nativeAd = ads?.get(0)
-
-                displayNativeAdTemplate(nativeAd)
-            }
-
-            override fun onAdsFailed(p0: String?) {
-                Log.e("TAG", "error loading ads:$p0")
-            }
-        })
-        AppTracker.loadNativeAds()
-        AppTracker.loadModuleToCache(applicationContext, "reward");
-        AppTracker.loadModuleToCache(getApplicationContext(), "inapp");
-
-
+        setContentView(R.layout.activity_home)
         (application as App).appComponent.inject(this)
         setSupportActionBar(toolbar)
         supportActionBar?.title = null
@@ -94,20 +50,6 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
         fabAddNote.setOnClickListener {
             startActivity(Intent(this, NoteActivity::class.java))
-        }
-    }
-
-    private fun displayNativeAdTemplate(nativeAd: ATNativeAd?) {
-        run {
-            runOnUiThread {
-                val container = findViewById<View>(R.id.native_ad_container) as RelativeLayout
-                container.visibility = View.VISIBLE
-                val adTemplateView =
-                    ATNativeAdView.nativeAdViewWithAd(this, nativeAd, ATNativeAdView.Type.HEIGHT_300)
-                container.removeAllViews()
-                container.addView(adTemplateView)
-            }
-
         }
     }
 
@@ -152,6 +94,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
+                    // No impl needed for now
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -219,7 +162,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
             it?.let {
                 val currentNote = it[0]
 
-                currentNote?.let {
+                currentNote.let {
                     currentNote.dateOfReminder = 0 // Reset scheduled date
                     notesViewModel.updateNote(currentNote)
                 }

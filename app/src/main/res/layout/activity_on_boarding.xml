@@ -32,7 +32,7 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:text="@string/btn_finish"
         android:textStyle="bold"
-        android:textColor="@color/primary_button_color"
+        android:textColor="@color/colorWhite"
         android:visibility="invisible"
         tools:visibility="visible"
         android:layout_width="0dp"

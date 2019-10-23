@@ -10,10 +10,10 @@ enum class OnBoardingItemEnum constructor(
     private val mDescriptionResId: Int,
     private val mDrawableResId: Int
 ) {
-    ONBOARDING_HELLO(
+    ONBOARDING_SAVE(
         R.string.onboarding_hello_title,
         R.string.onboarding_hello_description,
-        R.drawable.onboarding_hello
+        R.drawable.onboarding_save
     ),
     ONBOARDING_SECURITY(
         R.string.onboarding_security_title,
@@ -24,6 +24,11 @@ enum class OnBoardingItemEnum constructor(
         R.string.onboarding_reminder_title,
         R.string.onboarding_reminder_description,
         R.drawable.onboarding_reminder
+    ),
+    ONBOARDING_SHARE(
+        R.string.onboarding_share_title,
+        R.string.onboarding_share_description,
+        R.drawable.onboarding_share
     );
 
     fun getDescriptionResId() = mDescriptionResId
