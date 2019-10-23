@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.eftimoff.viewpagertransformers.BackgroundToForegroundTransformer
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.presentation.ui.activities.HomeActivity
 import kotlinx.android.synthetic.main.activity_on_boarding.*
@@ -23,9 +24,10 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private fun initViewPager() {
         val onBoardingItems = OnBoardingItemEnum.values().toMutableList()
-
         val onBoardingAdapter = OnBoardingAdapter(onBoardingItems, this)
         vpOnboarding.adapter = onBoardingAdapter
+        vpOnboarding.setPageTransformer(true, BackgroundToForegroundTransformer())
+
         circleIndicator.setViewPager(vpOnboarding)
 
         vpOnboarding.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

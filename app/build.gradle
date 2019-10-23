@@ -99,4 +99,7 @@ dependencies {
 
     // Material time-dialogs
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    // View-pager transformer
+    implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 }
