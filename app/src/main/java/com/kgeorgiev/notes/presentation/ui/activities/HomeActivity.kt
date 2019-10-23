@@ -2,14 +2,22 @@ package com.kgeorgiev.notes.presentation.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.RelativeLayout
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.apptracker.android.listener.AppModuleListener
+import com.apptracker.android.nativead.ATNativeAd
+import com.apptracker.android.nativead.ATNativeAdCollection
+import com.apptracker.android.nativead.ATNativeListener
+import com.apptracker.android.nativead.template.ATNativeAdView
+import com.apptracker.android.track.AppTracker
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
@@ -33,6 +41,8 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     private lateinit var notesAdapter: NotesAdapter
 
     lateinit var biometricPrompt: BiometricPrompt
+    var nativeAd: ATNativeAd? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +50,8 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
         (application as App).appComponent.inject(this)
         setSupportActionBar(toolbar)
         supportActionBar?.title = null
+
+        initLeadBolt()
 
         notesViewModel =
             ViewModelProviders.of(this, viewModelFactoryProvider).get(NotesViewModel::class.java)
@@ -52,6 +64,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
             startActivity(Intent(this, NoteActivity::class.java))
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -201,4 +214,81 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     private fun openOnboardingScreen() {
         startActivity(Intent(this, OnBoardingActivity::class.java))
     }
+
+
+    //-----------LEADBOLT SDK ----
+    private fun initLeadBolt() {
+
+        AppTracker.setNativeListener(object : ATNativeListener {
+            override fun onAdClicked(p0: ATNativeAd?) {
+            }
+
+            override fun onAdDisplayed(p0: ATNativeAd?) {
+            }
+
+            override fun onAdsLoaded(adCollection: ATNativeAdCollection?) {
+                //called once loadNativeAds call is successful
+                // use this method to setup your views and display the Ad(s)
+
+                Log.e("TAG", "Ads loaded!!!");
+                val ads = adCollection?.ads
+                // an array of ATNativeAd objects
+
+                //int adCount = ads.size(); // get number of ads returned by the server, if needed
+
+                //display the first ad returned from server
+                nativeAd = ads?.get(0)
+
+                displayNativeAdTemplate(nativeAd)
+            }
+
+            override fun onAdsFailed(p0: String?) {
+                Log.e("TAG", "error loading ads:$p0")
+            }
+        })
+
+        AppTracker.setModuleListener(object : AppModuleListener {
+            override fun onModuleClosed(p0: String?, p1: Boolean) {
+                Log.e("TAG", "onModuleClosed")
+            }
+
+            override fun onModuleLoaded(p0: String?) {
+                Log.e("TAG", "onModuleLoaded")
+            }
+
+            override fun onModuleCached(p0: String?) {
+                Log.e("TAG", "onModuleCached")
+            }
+
+            override fun onModuleClicked(p0: String?) {
+                Log.e("TAG", "onModuleClicked")
+
+            }
+
+            override fun onModuleFailed(p0: String?, p1: String?, p2: Boolean) {
+                Log.e("TAG", "onModuleFailed")
+            }
+
+        })
+        AppTracker.startSession(applicationContext, "rGpw4wvOSCytMMQDqxh1IYoY2fPvDGHk", true)
+        AppTracker.loadNativeAds()
+        AppTracker.loadModuleToCache(applicationContext, "reward");
+        AppTracker.loadModuleToCache(getApplicationContext(), "inapp");
+
+    }
+
+    private fun displayNativeAdTemplate(nativeAd: ATNativeAd?) {
+        run {
+            runOnUiThread {
+                val container = findViewById<View>(R.id.native_ad_container) as RelativeLayout
+                container.visibility = View.VISIBLE
+                val adTemplateView =
+                    ATNativeAdView.nativeAdViewWithAd(this, nativeAd, ATNativeAdView.Type.HEIGHT_300)
+                container.removeAllViews()
+                container.addView(adTemplateView)
+            }
+
+        }
+    }
+
 }
