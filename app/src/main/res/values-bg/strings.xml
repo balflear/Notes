@@ -51,9 +51,13 @@
 
     <string name="onboarding_security_title">Защитете вашата бележка</string>
     <string name="onboarding_security_description">Заключете вашата бележка, така че само вие да можете да я отворите като използвате отпечатък,
-        pin или др. механизъм за отключване</string>
+        pin или др. механизъм за отключване.</string>
+
     <string name="onboarding_reminder_title">Напомняне</string>
-    <string name="onboarding_reminder_description">Вие можете бързо и лесно да изберете дата и час, в който ще получите известие за конкретна бележка</string>
+    <string name="onboarding_reminder_description">Вие можете бързо и лесно да изберете дата и час, в който ще получите известие за конкретна бележка.</string>
+
+    <string name="onboarding_share_title">Споделяне</string>
+    <string name="onboarding_share_description">Споделете лесно бележките си със семейството и приятелите си.</string>
 
     <!-- Notifications -->
     <string name="notification_channel_name">Моите бележки</string>

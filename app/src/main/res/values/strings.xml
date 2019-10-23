@@ -53,8 +53,8 @@
     <string name="onboarding_reminder_title">Set Reminder</string>
     <string name="onboarding_reminder_description">Set reminder for your notes easily and receive a notification for it.</string>
 
-    <string name="onboarding_share_title" translatable="false">Sharing</string>
-    <string name="onboarding_share_description" translatable="false">Share your notes easy with your family and friends.</string>
+    <string name="onboarding_share_title">Sharing</string>
+    <string name="onboarding_share_description">Share your notes easy with your family and friends.</string>
     <string name="btn_finish">finish</string>
 
     <!-- Notifications -->

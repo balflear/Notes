@@ -53,7 +53,8 @@
     <string name="onboarding_reminder_title">Установить напоминание</string>
     <string name="onboarding_reminder_description">Легко установите напоминание для своих заметок и получите уведомление для него</string>
     <string name="btn_finish">конец</string>
-
+    <string name="onboarding_share_title">Доля</string>
+    <string name="onboarding_share_description">Легко делитесь своими заметками с семьей и друзьями.</string>
     <!-- Notifications -->
     <string name="notification_channel_name">Мои заметки</string>
 

@@ -84,7 +84,8 @@
     <string name="onboarding_reminder_title">Erinnerung festlegen</string>
         
     <string name="onboarding_reminder_description">Legen Sie einfach eine Erinnerung für Ihre Notizen fest und erhalten Sie eine Benachrichtigung</string>
-        
+    <string name="onboarding_share_title">Teilen</string>
+    <string name="onboarding_share_description">Teilen Sie Ihre Notizen ganz einfach mit Ihrer Familie und Freunden</string>
     <string name="btn_finish">beenden</string>
 
         <!-- Notifications -->
