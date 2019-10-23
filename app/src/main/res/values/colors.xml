@@ -9,4 +9,9 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="primary_button_color">#2ACABE</color>
+
+    <color name="splash_scren_light_blue">#a6ede8</color>
+    <color name="splash_scren_light_blue2">#b3efeb</color>
+
+
 </resources>
