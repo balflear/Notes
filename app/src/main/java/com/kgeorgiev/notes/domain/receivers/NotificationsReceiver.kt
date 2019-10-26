@@ -1,9 +1,6 @@
 package com.kgeorgiev.notes.domain.receivers
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -38,18 +35,23 @@ class NotificationsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         (context?.applicationContext as App).appComponent.inject(this)
 
+        //TODO: Re-start alarms after device gets rebooted
+        // Fetch notes that has scheduled time and then re-start alarms
+
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val splashScreenIntent = Intent(context, SplashScreenActivity::class.java)
-        //splashScreenIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        splashScreenIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         splashScreenIntent.putExtras(intent!!)
 
+        // Create the TaskStackBuilder get current intent stack to add 'splashScreenIntent' intent into it
+        val stackBuilder = TaskStackBuilder.create(context)
+        stackBuilder.addNextIntentWithParentStack(splashScreenIntent)
+
         val pendingIntent =
-            PendingIntent.getActivity(
-                context,
+            stackBuilder.getPendingIntent(
                 DEFAULT_INTENT_REQUEST_CODE,
-                splashScreenIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
