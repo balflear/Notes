@@ -29,4 +29,6 @@ class NotesRepository {
 
     suspend fun updateNoteReminderTime(noteId: Int, dateOfReminder: Long) =
         notesDao.updateNoteReminderTime(noteId, dateOfReminder)
+
+    suspend fun getScheduledNotes(): List<Note> = notesDao.getScheduledNotes()
 }

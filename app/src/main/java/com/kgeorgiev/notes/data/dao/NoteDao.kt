@@ -26,4 +26,7 @@ interface NoteDao {
 
     @Query("UPDATE notes_table SET reminder_date=:dateOfReminder WHERE id=:noteId")
     fun updateNoteReminderTime(noteId: Int, dateOfReminder: Long)
+
+    @Query("SELECT * from notes_table WHERE reminder_date != '0'")
+    fun getScheduledNotes(): List<Note>
 }

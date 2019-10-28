@@ -5,10 +5,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
+import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.data.repository.NotesRepository
+import com.kgeorgiev.notes.domain.AlarmHelper
 import com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +24,7 @@ import javax.inject.Inject
  * Created by kostadin.georgiev on 10/7/2019.
  */
 class NotificationsReceiver : BroadcastReceiver() {
+    private val TAG = NotificationsReceiver::class.java.name
     private val DEFAULT_NOTIFICATION_CHANNEL_ID = "default_channel"
     private val NOTIFICATION_CHANNEL_ID = "101"
     private val DEFAULT_INTENT_REQUEST_CODE = 100
@@ -29,14 +33,19 @@ class NotificationsReceiver : BroadcastReceiver() {
     lateinit var notesRepository: NotesRepository
 
     private val job = Job()
-    private val ioScope = CoroutineScope(Dispatchers.IO + job)
+    private val ioScope = CoroutineScope(Dispatchers.Main + job)
+    private lateinit var context: Context
 
 
     override fun onReceive(context: Context?, intent: Intent?) {
         (context?.applicationContext as App).appComponent.inject(this)
+        this.context = context
 
-        //TODO: Re-start alarms after device gets rebooted
-        // Fetch notes that has scheduled time and then re-start alarms
+        if (intent?.action == "android.intent.action.BOOT_COMPLETED") {
+            // Re-start alarms in case of device reboot
+            reScheduleAlarms()
+            return
+        }
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -68,6 +77,7 @@ class NotificationsReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(notificationChannel)
         }
 
+        Log.e(TAG, "Making notification")
         notificationManager.notify(notificationId, notification)
         resetNoteReminderInDB(notificationId)
     }
@@ -93,6 +103,21 @@ class NotificationsReceiver : BroadcastReceiver() {
     private fun resetNoteReminderInDB(noteId: Int) {
         ioScope.launch {
             notesRepository.updateNoteReminderTime(noteId, 0)
+        }
+    }
+
+    /**
+     * This should be called after device gets rebooted
+     */
+    private fun reScheduleAlarms() {
+        ioScope.launch {
+            val scheduledNotes = notesRepository.getScheduledNotes()
+            if (scheduledNotes.isNotEmpty()) {
+                Log.e(TAG, "Rechedule alarms after reboot")
+                for (note: Note in scheduledNotes) {
+                    AlarmHelper.scheduleAlarm(note, context)
+                }
+            }
         }
     }
 

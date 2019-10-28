@@ -51,10 +51,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.NOTIFY" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
             <!-- TODO: Handle device on reboot to re-start alarms -->
-            <!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
-            <!--                <action android:name="android.intent.action.QUICKBOOT_POWERON" />-->
         </receiver>
     </application>
 

@@ -1,8 +1,5 @@
 package com.kgeorgiev.notes.presentation.ui.activities
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -18,8 +15,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
+import com.kgeorgiev.notes.domain.AlarmHelper
 import com.kgeorgiev.notes.domain.DateFormatter
-import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
@@ -256,12 +253,13 @@ class NoteActivity : BaseActivity() {
         }
 
     private fun showDeleteNoteDialog() {
+        val currentContext = this
         val messageDialogFragment =
             MessageDialogFragment.newInstance(
                 titleResId = R.string.dialog_title_delete_note,
                 dialogClickListener = object : DialogClickListener {
                     override fun onPositiveButtonClicked() {
-                        removeAlarm(selectedNote!!)
+                        AlarmHelper.removeAlarm(selectedNote!!, currentContext)
                         deleteNote(selectedNote!!)
                         playSuccessSound()
                     }
@@ -281,13 +279,14 @@ class NoteActivity : BaseActivity() {
             DateFormatter.formatDate(selectedNote!!.dateOfReminder)
         )
 
+        val currentContext = this
         val messageDialogFragment =
             MessageDialogFragment.newInstance(
                 titleResId = R.string.dialog_title_remove_reminder,
                 descriptionText = descriptionMsg,
                 dialogClickListener = object : DialogClickListener {
                     override fun onPositiveButtonClicked() {
-                        removeAlarm(selectedNote!!)
+                        AlarmHelper.removeAlarm(selectedNote!!, currentContext)
                         val note = selectedNote
                         note?.dateOfReminder = 0 // reset reminder
                         updateNote(note, getString(R.string.msg_reminder_removed))
@@ -383,45 +382,13 @@ class NoteActivity : BaseActivity() {
     }
 
     private fun scheduleAlarm(alarmTime: Long, note: Note) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            alarmTime,
-            makeAlarmPendingIntent(note)
-        )
+        note.dateOfReminder = alarmTime
+        AlarmHelper.scheduleAlarm(note, this)
 
-        note.dateOfReminder = myCalendar.timeInMillis
         updateNote(
             note,
             getString(R.string.msg_reminder_set) + " ${DateFormatter.formatDate(myCalendar.time)}"
         )
-    }
-
-    private fun removeAlarm(note: Note) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        alarmManager.cancel(makeAlarmPendingIntent(note))
-    }
-
-    private fun makeAlarmPendingIntent(note: Note): PendingIntent {
-        val notificationIntent = Intent(this, NotificationsReceiver::class.java)
-        val bundle = Bundle()
-        bundle.putString(NotificationsReceiver.NOTIFICATION_TITLE_PARAM, note.title)
-        bundle.putString(NotificationsReceiver.NOTIFICATION_TEXT_PARAM, note.description)
-        bundle.putInt(NotificationsReceiver.NOTIFICATION_ID_PARAM, note.id)
-        notificationIntent.putExtras(bundle)
-        notificationIntent.action = "android.intent.action.NOTIFY"
-
-        val requestCode = note.id
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                applicationContext,
-                requestCode,
-                notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-
-        return pendingIntent
     }
 
     private fun initViewsAndListeners() {
