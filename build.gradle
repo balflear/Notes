@@ -23,6 +23,10 @@ allprojects {
     }
 }
 
+project.ext {
+    keystorePropertiesFile = rootProject.file("keystore.properties")
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

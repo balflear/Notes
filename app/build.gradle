@@ -6,11 +6,20 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
+def getStartAppSdkId() {
+    if (project.keystorePropertiesFile.exists()) {
+        def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+        return keystoreProperties.getProperty("startAppId")
+    } else {
+        return ""
+    }
+}
+
 android {
     signingConfigs {
         release {
-            if (keystorePropertiesFile.exists()) {
+            if (project.keystorePropertiesFile.exists()) {
                 def keystoreProperties = new Properties()
                 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
@@ -46,9 +55,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            buildConfigField "String", "ADS_SDK_ID", "\"" + getStartAppSdkId() + "\""
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+
+        debug {
+            buildConfigField "String", "ADS_SDK_ID", "\"" + getStartAppSdkId() + "\""
         }
     }
 }
@@ -102,4 +116,7 @@ dependencies {
 
     // View-pager transformer
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
+
+    // Ads sdk
+    implementation 'com.startapp:inapp-sdk:4.2.4'
 }
