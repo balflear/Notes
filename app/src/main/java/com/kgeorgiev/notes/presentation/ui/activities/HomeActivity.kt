@@ -14,6 +14,7 @@ import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
+import com.kgeorgiev.notes.presentation.AdsManager
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.adapters.NotesAdapter
@@ -28,6 +29,10 @@ import javax.inject.Inject
 class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
     @Inject
     lateinit var viewModelFactoryProvider: ViewModelFactoryProvider
+
+    @Inject
+    lateinit var adsManager: AdsManager
+
     private lateinit var notesViewModel: NotesViewModel
 
     private lateinit var notesAdapter: NotesAdapter

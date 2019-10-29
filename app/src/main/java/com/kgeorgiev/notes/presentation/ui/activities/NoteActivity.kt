@@ -17,6 +17,7 @@ import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.domain.AlarmHelper
 import com.kgeorgiev.notes.domain.DateFormatter
+import com.kgeorgiev.notes.presentation.AdsManager
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
@@ -34,6 +35,10 @@ import javax.inject.Inject
 class NoteActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactoryProvider: ViewModelFactoryProvider
+
+    @Inject
+    lateinit var adsManager: AdsManager
+
     private lateinit var notesViewModel: NotesViewModel
     private var selectedNote: Note? = null
 
@@ -427,7 +432,7 @@ class NoteActivity : BaseActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
 
         if (shouldShowAd) {
-            // Show add
+            adsManager.showIrrestialAd()
         }
     }
 
