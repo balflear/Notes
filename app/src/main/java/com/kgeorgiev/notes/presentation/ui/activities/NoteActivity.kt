@@ -17,13 +17,13 @@ import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.domain.AlarmHelper
 import com.kgeorgiev.notes.domain.DateFormatter
+import com.kgeorgiev.notes.presentation.AdsManager
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
 import com.kgeorgiev.notes.presentation.ui.dialogs.MessageDialogFragment
 import com.kgeorgiev.notes.presentation.ui.dialogs.MessageDialogFragment.DialogClickListener
 import com.kgeorgiev.notes.presentation.viewmodels.NotesViewModel
-import com.startapp.android.publish.adsCommon.StartAppAd
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_add_note.*
@@ -35,6 +35,10 @@ import javax.inject.Inject
 class NoteActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactoryProvider: ViewModelFactoryProvider
+
+    @Inject
+    lateinit var adsManager: AdsManager
+
     private lateinit var notesViewModel: NotesViewModel
     private var selectedNote: Note? = null
 
@@ -46,7 +50,6 @@ class NoteActivity : BaseActivity() {
     private val DATE_PICKER_DIALOG_TAG = "date_picker_tag"
     private val TIME_PICKER_DIALOG_TAG = "time_picker_tag"
     private val MAX_SAVE_BTN_ANIMATIONS_COUNT = 3
-    private lateinit var exitAd: StartAppAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +60,6 @@ class NoteActivity : BaseActivity() {
         notesViewModel =
             ViewModelProviders.of(this, viewModelFactoryProvider).get(NotesViewModel::class.java)
 
-        exitAd = StartAppAd(applicationContext)
-        exitAd.loadAd(StartAppAd.AdMode.AUTOMATIC)
     }
 
     override fun onResume() {
@@ -431,7 +432,7 @@ class NoteActivity : BaseActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
 
         if (shouldShowAd) {
-            exitAd.showAd()
+            adsManager.showIrrestialAd()
         }
     }
 

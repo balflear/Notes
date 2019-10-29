@@ -21,17 +21,23 @@
 #-renamesourcefileattribute SourceFile
 
 
-#--- StartAppSdk
--keep class com.startapp.** {
-      *;
+#--- LeadBolt SDK
+-dontwarn android.support.v4.**
+-keep class com.google.** { *; }
+-dontwarn com.google.**
+
+-keep class com.apptracker.** { *; }
+-dontwarn com.apptracker.**
+-keepclassmembers class **.R$* {
+	public static <fields>;
 }
+-keep class **.R$*
 
--keep class com.truenet.** {
-      *;
-}
-
--keepattributes Exceptions, InnerClasses, Signature, Deprecated, SourceFile, LineNumberTable, *Annotation*, EnclosingMethod
--dontwarn android.webkit.JavascriptInterface
--dontwarn com.startapp.**
-
--dontwarn org.jetbrains.annotations.**
+#--- Disable logs
+#-assumenosideeffects class android.util.Log {
+#  public static *** v(...);
+#  public static *** d(...);
+#  public static *** i(...);
+#  public static *** w(...);
+#  public static *** e(...);
+#}

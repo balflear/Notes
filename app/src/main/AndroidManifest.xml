@@ -6,12 +6,9 @@
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Startapp sdk permissions -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:name=".App"
@@ -62,6 +59,15 @@
             </intent-filter>
             <!-- TODO: Handle device on reboot to re-start alarms -->
         </receiver>
+
+
+        <!-- LeadBolt SDK -->
+        <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:name="com.apptracker.android.module.AppModuleActivity"
+            android:hardwareAccelerated="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <service android:name="com.apptracker.android.track.AppTrackerService" />
     </application>
 
 </manifest>

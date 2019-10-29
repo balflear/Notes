@@ -2,6 +2,7 @@ package com.kgeorgiev.notes.presentation.di
 
 import android.content.Context
 import com.kgeorgiev.notes.domain.SharedPrefsWrapper
+import com.kgeorgiev.notes.presentation.AdsManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,5 +22,11 @@ class AppModule(private val appContext: Context) {
     @Singleton
     fun provideSharedPrefsWrapper(context: Context): SharedPrefsWrapper {
         return SharedPrefsWrapper(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAdsManager(appContext: Context): AdsManager {
+        return AdsManager(appContext)
     }
 }
