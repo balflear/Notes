@@ -10,7 +10,7 @@ def getAdsId() {
     if (project.keystorePropertiesFile.exists()) {
         def keystoreProperties = new Properties()
         keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-        return keystoreProperties.getProperty("startAppId")
+        return keystoreProperties.getProperty("leadBoltId")
     } else {
         return ""
     }
@@ -36,8 +36,8 @@ android {
         applicationId "com.kgeorgiev.notes"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 4
-        versionName "1.0.0"
+        versionCode 5
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -59,6 +59,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            debuggable false
         }
 
         debug {

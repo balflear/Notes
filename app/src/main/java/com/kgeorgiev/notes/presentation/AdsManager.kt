@@ -26,7 +26,10 @@ class AdsManager constructor(private val appContext: Context) {
 
     fun showIrrestialAd() {
         if (isIrrestialAdLoaded) {
+            Log.e(TAG, "Show AD")
             AppTracker.loadModule(appContext, IRRESTIAL_AD_TYPE)
+        } else {
+            AppTracker.loadModuleToCache(appContext, IRRESTIAL_AD_TYPE) // Fetch ad again
         }
     }
 
