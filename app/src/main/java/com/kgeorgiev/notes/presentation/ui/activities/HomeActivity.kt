@@ -2,6 +2,7 @@ package com.kgeorgiev.notes.presentation.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -230,7 +231,7 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
                 //called once loadNativeAds call is successful
                 // use this method to setup your views and display the Ad(s)
 
-                Log.e("TAG", "Ads loaded!!!");
+                Log.e("TAG", "Ads loaded!!!")
                 val ads = adCollection?.ads
                 // an array of ATNativeAd objects
 
@@ -249,31 +250,36 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
 
         AppTracker.setModuleListener(object : AppModuleListener {
             override fun onModuleClosed(p0: String?, p1: Boolean) {
-                Log.e("TAG", "onModuleClosed")
+                Log.e("TAG", "onModuleClosed:$p0")
             }
 
             override fun onModuleLoaded(p0: String?) {
-                Log.e("TAG", "onModuleLoaded")
+                Log.e("TAG", "onModuleLoaded:$p0")
             }
 
             override fun onModuleCached(p0: String?) {
-                Log.e("TAG", "onModuleCached")
+                Log.e("TAG", "onModuleCached:$p0")
+                Handler().postDelayed(Runnable {
+                    AppTracker.loadModule(applicationContext, p0)
+
+                }, 3000)
             }
 
             override fun onModuleClicked(p0: String?) {
-                Log.e("TAG", "onModuleClicked")
+                Log.e("TAG", "onModuleClicked:$p0")
 
             }
 
             override fun onModuleFailed(p0: String?, p1: String?, p2: Boolean) {
-                Log.e("TAG", "onModuleFailed")
+                Log.e("TAG", "onModuleFailed:$p0")
             }
 
         })
         AppTracker.startSession(applicationContext, "rGpw4wvOSCytMMQDqxh1IYoY2fPvDGHk", true)
-        AppTracker.loadNativeAds()
-        AppTracker.loadModuleToCache(applicationContext, "reward");
-        AppTracker.loadModuleToCache(getApplicationContext(), "inapp");
+
+        AppTracker.loadModuleToCache(applicationContext, "inapp");
+        //AppTracker.loadModuleToCache(applicationContext, "reward");
+        //AppTracker.loadNativeAdsWithCaching();
 
     }
 
