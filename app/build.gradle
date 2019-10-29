@@ -118,5 +118,4 @@ dependencies {
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // Ads sdk
-    implementation 'com.startapp:inapp-sdk:4.2.4'
 }

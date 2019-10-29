@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kgeorgiev.notes.App
-import com.kgeorgiev.notes.BuildConfig
 import com.kgeorgiev.notes.R
 import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
@@ -21,8 +20,6 @@ import com.kgeorgiev.notes.presentation.ui.adapters.NotesAdapter
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
 import com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity
 import com.kgeorgiev.notes.presentation.viewmodels.NotesViewModel
-import com.startapp.android.publish.adsCommon.StartAppAd
-import com.startapp.android.publish.adsCommon.StartAppSDK
 import kotlinx.android.synthetic.main.activity_add_note.view.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -54,16 +51,6 @@ class HomeActivity : BaseActivity(), NotesAdapter.OnClickListener {
         fabAddNote.setOnClickListener {
             startActivity(Intent(this, NoteActivity::class.java))
         }
-
-        StartAppSDK.init(this, BuildConfig.ADS_SDK_ID, true)
-        StartAppSDK.setUserConsent(
-            this,
-            "pas",
-            System.currentTimeMillis(),
-            true
-        )
-        StartAppAd.disableSplash()
-        //StartAppAd.showAd(this)
     }
 
     override fun onResume() {
