@@ -119,4 +119,5 @@ dependencies {
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // Ads sdk
+    implementation 'com.google.android.gms:play-services:12.0.1' // Needed for GAID for Leadbolt-SDK
 }
