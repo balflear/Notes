@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         app:descriptionText="@string/onboarding_hello_description"
-        app:drawable="@drawable/ic_splash"
+        app:drawable="@mipmap/ic_launcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
