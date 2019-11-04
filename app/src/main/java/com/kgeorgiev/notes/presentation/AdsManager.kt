@@ -71,15 +71,19 @@ class AdsManager constructor(private val appContext: Context) {
 
     private val nativeAdsListener = object : ATNativeListener {
         override fun onAdClicked(p0: ATNativeAd?) {
+            Log.e(TAG, "NativeAd clicked")
         }
 
         override fun onAdDisplayed(p0: ATNativeAd?) {
+            Log.e(TAG, "NativeAd displayed")
         }
 
         override fun onAdsLoaded(p0: ATNativeAdCollection?) {
+            Log.e(TAG, "NativeAds loaded")
         }
 
         override fun onAdsFailed(p0: String?) {
+            Log.e(TAG, "NativeAd error loading:$p0")
         }
     }
 
@@ -94,6 +98,9 @@ class AdsManager constructor(private val appContext: Context) {
 
             AppTracker.loadModuleToCache(appContext, IRRESTIAL_AD_TYPE)
             AppTracker.loadModuleToCache(appContext, REWARD_AD_TYPE)
+
+            // Native-ads
+            AppTracker.loadNativeAdsWithCaching()
         }
     }
 }

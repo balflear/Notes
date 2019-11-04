@@ -10,7 +10,7 @@
         android:layout_width="@dimen/onboarding_imageview_width"
         android:layout_height="@dimen/onboarding_imageview_height"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_splash" />
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOnBoardingTitle"
