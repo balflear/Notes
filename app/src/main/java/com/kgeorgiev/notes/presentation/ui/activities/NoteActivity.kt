@@ -98,6 +98,7 @@ class NoteActivity : BaseActivity() {
             itemShare.isVisible = false
         }
 
+        //TODO:If device has not secured, show a dialog with goto settings button
         // Handle lock/unlock button state if device has hardware-fingerprint
         if (BiometricsHelper.canAuthenticateWithBiometrics(this) && selectedNote != null) {
             if (selectedNote!!.isLocked) {

@@ -34,12 +34,13 @@ android {
     }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+
     defaultConfig {
         applicationId "com.kgeorgiev.notes"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.0.2"
+        versionCode 7
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -57,7 +58,9 @@ android {
 
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
+
         release {
             buildConfigField "String", "ADS_SDK_ID", "\"" + getAdsId() + "\""
             minifyEnabled true
