@@ -27,12 +27,19 @@ class BiometricsHelper {
          */
         fun canAuthenticateWithBiometrics(context: Context): Boolean {
             // Check whether the fingerprint can be used for authentication (Android M to P)
-            if (Build.VERSION.SDK_INT < 29) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 val keyguardManager =
                     context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
                 val fingerprintManagerCompat = FingerprintManagerCompat.from(context)
-                return (fingerprintManagerCompat.isHardwareDetected && fingerprintManagerCompat.hasEnrolledFingerprints())
-                        || keyguardManager.isDeviceSecure
+                val isDeviceSecured = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    keyguardManager.isDeviceSecure // Api 23+
+                } else {
+                    keyguardManager.isKeyguardSecure // Api < 23
+                }
+
+                val isSecured =
+                    (fingerprintManagerCompat.isHardwareDetected && fingerprintManagerCompat.hasEnrolledFingerprints()) || isDeviceSecured
+                return isSecured
             } else {    // Check biometric manager (from Android Q)
                 val biometricManager = context.getSystemService(BiometricManager::class.java)
                 if (biometricManager != null) {
