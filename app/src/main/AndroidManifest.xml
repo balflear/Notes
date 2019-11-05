@@ -69,8 +69,13 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <service android:name="com.apptracker.android.track.AppTrackerService" />
 
+        <!-- Disable analytics per flag -->
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
+            android:value="@bool/FIREBASE_ANALYTICS_DEACTIVATED" />
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
             android:value="@bool/FIREBASE_ANALYTICS_DEACTIVATED" />
     </application>
 
