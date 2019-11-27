@@ -14,9 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
-import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.domain.AlarmHelper
 import com.kgeorgiev.notes.domain.DateFormatter
+import com.kgeorgiev.notes.domain.entity.Note
 import com.kgeorgiev.notes.presentation.AdsManager
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider

@@ -1,6 +1,6 @@
 package com.kgeorgiev.notes.presentation.di
 
-import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
+import com.kgeorgiev.notes.presentation.receivers.NotificationsReceiver
 import com.kgeorgiev.notes.presentation.ui.activities.HomeActivity
 import com.kgeorgiev.notes.presentation.ui.activities.NoteActivity
 import com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity
@@ -12,7 +12,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = [AppModule::class, ViewModelsModule::class, DatabaseModule::class])
+@Component(modules = [AppModule::class, ViewModelsModule::class, DatabaseModule::class, RepositoryModule::class])
 interface AppComponent {
 
     fun inject(homeActivity: HomeActivity)

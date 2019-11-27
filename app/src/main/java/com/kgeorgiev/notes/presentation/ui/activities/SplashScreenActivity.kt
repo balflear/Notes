@@ -7,7 +7,7 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
-import com.kgeorgiev.notes.domain.SharedPrefsWrapper
+import com.kgeorgiev.notes.data.SharedPrefsWrapper
 import com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity
 import kotlinx.android.synthetic.main.activity_splash_screen_avtivity.*
 import javax.inject.Inject

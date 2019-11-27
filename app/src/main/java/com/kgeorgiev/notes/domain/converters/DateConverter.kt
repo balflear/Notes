@@ -1,4 +1,4 @@
-package com.kgeorgiev.notes.data.converters
+package com.kgeorgiev.notes.domain.converters
 
 import androidx.room.TypeConverter
 import java.util.*

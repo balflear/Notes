@@ -1,4 +1,4 @@
-package com.kgeorgiev.notes.domain
+package com.kgeorgiev.notes.data
 
 import android.content.Context
 import javax.inject.Inject

@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.kgeorgiev.notes.R
-import com.kgeorgiev.notes.data.entity.Note
 import com.kgeorgiev.notes.domain.DateFormatter
+import com.kgeorgiev.notes.domain.entity.Note
 import kotlinx.android.synthetic.main.note_list_item.view.*
 
 /**

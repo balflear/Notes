@@ -3,8 +3,8 @@ package com.kgeorgiev.notes.presentation.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.kgeorgiev.notes.data.entity.Note
-import com.kgeorgiev.notes.data.repository.NotesRepository
+import com.kgeorgiev.notes.domain.entity.Note
+import com.kgeorgiev.notes.domain.repository.NotesRepositroy
 import com.kgeorgiev.notes.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by kostadin.georgiev on 9/17/2019.
  */
-class NotesViewModel @Inject constructor(private var notesRepository: NotesRepository) :
+class NotesViewModel @Inject constructor(private var notesRepositoryImpl: NotesRepositroy) :
     BaseViewModel() {
 
     private val notesLiveData: MutableLiveData<List<Note>> by lazy {
@@ -21,25 +21,25 @@ class NotesViewModel @Inject constructor(private var notesRepository: NotesRepos
 
     fun insertNote(note: Note) {
         startJob {
-            notesRepository.insertNote(note)
+            notesRepositoryImpl.insertNote(note)
         }
     }
 
     fun updateNote(note: Note) {
         startJob {
-            notesRepository.updateNote(note)
+            notesRepositoryImpl.updateNote(note)
         }
     }
 
     fun deleteNote(note: Note) {
         startJob {
-            notesRepository.deleteNote(note)
+            notesRepositoryImpl.deleteNote(note)
         }
     }
 
     fun getNote(noteId: Int): LiveData<List<Note>> {
         viewModelScope.launch {
-            val note = notesRepository.getNote(noteId)
+            val note = notesRepositoryImpl.getNote(noteId)
             val list = ArrayList<Note>()
             list.add(note)
             notesLiveData.value = list
@@ -51,7 +51,7 @@ class NotesViewModel @Inject constructor(private var notesRepository: NotesRepos
     @Suppress("UNCHECKED_CAST")
     fun getNotes(): LiveData<List<Note>> {
         viewModelScope.launch {
-            val result = notesRepository.getAllNotes()
+            val result = notesRepositoryImpl.getAllNotes()
             notesLiveData.value = result
         }
 

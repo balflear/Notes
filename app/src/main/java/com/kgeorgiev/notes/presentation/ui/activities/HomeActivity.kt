@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
-import com.kgeorgiev.notes.data.entity.Note
-import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
+import com.kgeorgiev.notes.domain.entity.Note
 import com.kgeorgiev.notes.presentation.AdsManager
 import com.kgeorgiev.notes.presentation.base.BaseActivity
 import com.kgeorgiev.notes.presentation.di.ViewModelFactoryProvider
+import com.kgeorgiev.notes.presentation.receivers.NotificationsReceiver
 import com.kgeorgiev.notes.presentation.ui.adapters.NotesAdapter
 import com.kgeorgiev.notes.presentation.ui.dialogs.BiometricsHelper
 import com.kgeorgiev.notes.presentation.ui.onboarding.OnBoardingActivity

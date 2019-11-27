@@ -49,7 +49,7 @@
             android:screenOrientation="portrait" />
 
         <receiver
-            android:name="com.kgeorgiev.notes.domain.receivers.NotificationsReceiver"
+            android:name="com.kgeorgiev.notes.presentation.receivers.NotificationsReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
