@@ -28,11 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({
-            //            if (lottieView.isAnimating) {
-//                lottieView.cancelAnimation()
-//            }
             finish()
-
             handleNextScreen()
         }, animDuration + 500)
     }

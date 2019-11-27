@@ -7,9 +7,9 @@ import javax.inject.Inject
 /**
  * Created by kostadin.georgiev on 11/27/2019.
  */
-class InsertNoteUseCase @Inject constructor(private var notesRepositroy: NotesRepositroy) : BaseUseCase() {
+class UpdateNoteUseCase @Inject constructor(private var notesRepositroy: NotesRepositroy) : BaseUseCase() {
 
     suspend fun invoke(note: Note) {
-        super.invoke { notesRepositroy.insertNote(note) }
+        super.invoke { notesRepositroy.updateNote(note) }
     }
 }
