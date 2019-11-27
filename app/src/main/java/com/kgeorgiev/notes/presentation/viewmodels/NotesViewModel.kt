@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kgeorgiev.notes.domain.entity.Note
 import com.kgeorgiev.notes.domain.repository.NotesRepositroy
+import com.kgeorgiev.notes.domain.usecase.InsertNoteUseCase
 import com.kgeorgiev.notes.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,7 +13,10 @@ import javax.inject.Inject
 /**
  * Created by kostadin.georgiev on 9/17/2019.
  */
-class NotesViewModel @Inject constructor(private var notesRepositoryImpl: NotesRepositroy) :
+class NotesViewModel @Inject constructor(
+    var notesRepositoryImpl: NotesRepositroy,//TODO: move to Use-Cases
+    var insertNoteUseCase: InsertNoteUseCase
+) :
     BaseViewModel() {
 
     private val notesLiveData: MutableLiveData<List<Note>> by lazy {
@@ -20,8 +24,8 @@ class NotesViewModel @Inject constructor(private var notesRepositoryImpl: NotesR
     }
 
     fun insertNote(note: Note) {
-        startJob {
-            notesRepositoryImpl.insertNote(note)
+        viewModelScope.launch {
+            insertNoteUseCase.invoke(note)
         }
     }
 
