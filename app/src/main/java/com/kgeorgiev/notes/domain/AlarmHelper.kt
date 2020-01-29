@@ -6,8 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.kgeorgiev.notes.data.entity.Note
-import com.kgeorgiev.notes.domain.receivers.NotificationsReceiver
+import com.kgeorgiev.notes.domain.entity.Note
+import com.kgeorgiev.notes.presentation.receivers.NotificationsReceiver
 
 class AlarmHelper {
     companion object {

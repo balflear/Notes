@@ -1,7 +1,7 @@
 package com.kgeorgiev.notes.presentation.di
 
 import android.content.Context
-import com.kgeorgiev.notes.domain.SharedPrefsWrapper
+import com.kgeorgiev.notes.data.SharedPrefsWrapper
 import com.kgeorgiev.notes.presentation.AdsManager
 import dagger.Module
 import dagger.Provides

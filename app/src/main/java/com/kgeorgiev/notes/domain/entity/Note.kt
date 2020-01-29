@@ -1,4 +1,4 @@
-package com.kgeorgiev.notes.data.entity
+package com.kgeorgiev.notes.domain.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

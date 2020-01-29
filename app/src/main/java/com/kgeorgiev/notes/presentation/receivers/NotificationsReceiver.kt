@@ -1,4 +1,4 @@
-package com.kgeorgiev.notes.domain.receivers
+package com.kgeorgiev.notes.presentation.receivers
 
 import android.app.*
 import android.content.BroadcastReceiver
@@ -9,9 +9,9 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.kgeorgiev.notes.App
 import com.kgeorgiev.notes.R
-import com.kgeorgiev.notes.data.entity.Note
-import com.kgeorgiev.notes.data.repository.NotesRepository
+import com.kgeorgiev.notes.data.repository.NotesRepositoryImpl
 import com.kgeorgiev.notes.domain.AlarmHelper
+import com.kgeorgiev.notes.domain.entity.Note
 import com.kgeorgiev.notes.presentation.ui.activities.SplashScreenActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +30,7 @@ class NotificationsReceiver : BroadcastReceiver() {
     private val DEFAULT_INTENT_REQUEST_CODE = 100
 
     @Inject
-    lateinit var notesRepository: NotesRepository
+    lateinit var notesRepositoryImpl: NotesRepositoryImpl
 
     private val job = Job()
     private val ioScope = CoroutineScope(Dispatchers.Main + job)
@@ -102,7 +102,7 @@ class NotificationsReceiver : BroadcastReceiver() {
      */
     private fun resetNoteReminderInDB(noteId: Int) {
         ioScope.launch {
-            notesRepository.updateNoteReminderTime(noteId, 0)
+            notesRepositoryImpl.updateNoteReminderTime(noteId, 0)
         }
     }
 
@@ -111,7 +111,7 @@ class NotificationsReceiver : BroadcastReceiver() {
      */
     private fun reScheduleAlarms() {
         ioScope.launch {
-            val scheduledNotes = notesRepository.getScheduledNotes()
+            val scheduledNotes = notesRepositoryImpl.getScheduledNotes()
             if (scheduledNotes.isNotEmpty()) {
                 Log.e(TAG, "Rechedule alarms after reboot")
                 for (note: Note in scheduledNotes) {
