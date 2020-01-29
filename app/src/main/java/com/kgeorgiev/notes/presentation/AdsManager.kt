@@ -13,6 +13,7 @@ import javax.inject.Singleton
 
 /**
  * Created by kostadin.georgiev on 10/29/2019.
+ * Ads by Leadbolt.com
  */
 @Singleton
 class AdsManager constructor(private val appContext: Context) {
