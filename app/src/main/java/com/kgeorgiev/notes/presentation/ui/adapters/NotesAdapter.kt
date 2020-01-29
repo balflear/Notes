@@ -30,11 +30,17 @@ class NotesAdapter(
             AnimationUtils.loadAnimation(context, R.anim.fade_left_to_right_animation)
 
         holder.ivLockNote.visibility = if (currentNote.isLocked) View.VISIBLE else View.GONE
-        holder.ivReminderNote.visibility = if (currentNote.dateOfReminder > 0) View.VISIBLE else View.GONE
+
+        if (currentNote.dateOfReminder > 0) {
+            holder.ivReminderNote.visibility = View.VISIBLE
+            holder.tvDate.text = DateFormatter.formatDate(currentNote.dateOfReminder)
+        } else {
+            holder.ivReminderNote.visibility = View.GONE
+        }
+
         holder.tvTitle.text = currentNote.title
         holder.tvDescription.text =
             if (currentNote.isLocked) context.getString(R.string.msg_note_is_locked) else currentNote.description
-        holder.tvDate.text = DateFormatter.formatDate(currentNote.dateOfCreation)
 
         holder.cvNote.setOnClickListener {
             onClickListener.onNoteClicked(items[position])
